@@ -1,4 +1,4 @@
-package br.com.tassioauad.spotifystreamer.dagger;
+package br.com.tassioauad.spotifystreamer.utils.dagger;
 
 import android.app.Application;
 import android.content.Context;

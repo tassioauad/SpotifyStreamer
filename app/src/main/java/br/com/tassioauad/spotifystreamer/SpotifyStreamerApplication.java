@@ -2,7 +2,8 @@ package br.com.tassioauad.spotifystreamer;
 
 import android.app.Application;
 
-import br.com.tassioauad.spotifystreamer.dagger.AppModule;
+import br.com.tassioauad.spotifystreamer.utils.dagger.ApiModule;
+import br.com.tassioauad.spotifystreamer.utils.dagger.AppModule;
 import dagger.ObjectGraph;
 
 public class SpotifyStreamerApplication extends Application {
@@ -13,7 +14,12 @@ public class SpotifyStreamerApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        objectGraph = ObjectGraph.create(new AppModule(SpotifyStreamerApplication.this));
+        objectGraph = ObjectGraph.create(
+                new Object[]{
+                        new AppModule(SpotifyStreamerApplication.this),
+                        new ApiModule()
+                }
+        );
     }
 
     public ObjectGraph getObjectGraph() {
