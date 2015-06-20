@@ -1,15 +1,18 @@
 package br.com.tassioauad.spotifystreamer.model.api.asynctask;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.tassioauad.spotifystreamer.model.api.ApiResultListener;
+import br.com.tassioauad.spotifystreamer.model.api.exception.BadRequestException;
 import br.com.tassioauad.spotifystreamer.model.entity.Artist;
 import br.com.tassioauad.spotifystreamer.utils.exception.NotFoundException;
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
 import kaaes.spotify.webapi.android.models.ArtistsPager;
 import kaaes.spotify.webapi.android.models.Image;
+import retrofit.RetrofitError;
 
 public class ArtistFindByNameAsyncTask extends GenericAsyncTask<String, Void, List<Artist>> {
 
@@ -20,18 +23,26 @@ public class ArtistFindByNameAsyncTask extends GenericAsyncTask<String, Void, Li
     @Override
     protected AsyncTaskResult<List<Artist>> doInBackground(String... params) {
         SpotifyService spotifyService = new SpotifyApi().getService();
-        ArtistsPager results = spotifyService.searchArtists(params[0]);
 
-        if (results.artists.items.size() == 0) {
-            return new AsyncTaskResult<>(new NotFoundException());
+        try {
+            ArtistsPager results = spotifyService.searchArtists(params[0]);
 
-        } else {
             List<Artist> artistList = new ArrayList<>();
             for (kaaes.spotify.webapi.android.models.Artist spotifyWebApiArtist : results.artists.items) {
                 artistList.add(new Artist(spotifyWebApiArtist));
             }
 
             return new AsyncTaskResult<>(artistList);
+
+        } catch (RetrofitError error) {
+            switch(error.getResponse().getStatus()) {
+                case HttpURLConnection.HTTP_BAD_REQUEST:
+                    return new AsyncTaskResult<>(new BadRequestException());
+                case HttpURLConnection.HTTP_NOT_FOUND:
+                    return new AsyncTaskResult<>(new NotFoundException());
+                default:
+                    return new AsyncTaskResult<>(error);
+            }
         }
 
 

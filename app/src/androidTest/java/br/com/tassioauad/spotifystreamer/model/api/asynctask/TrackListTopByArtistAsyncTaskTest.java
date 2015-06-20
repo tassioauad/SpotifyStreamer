@@ -20,7 +20,7 @@ public class TrackListTopByArtistAsyncTaskTest extends AndroidTestCase {
 
     }
 
-    public void testDoInBackground() throws Exception {
+    public void testDoInBackground_ValidArtist() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         Artist artist = new Artist();
         artist.setId("2TI7qyDE0QfyOlnbtfDo7L");
@@ -35,6 +35,30 @@ public class TrackListTopByArtistAsyncTaskTest extends AndroidTestCase {
             @Override
             public void onException(Exception exception) {
                 fail(exception.getMessage());
+                signal.countDown();
+            }
+        });
+
+        trackListTopByArtistAsyncTask.execute(artist);
+        signal.await();
+    }
+
+    public void testDoInBackground_InvalidArtist() throws Exception {
+        final CountDownLatch signal = new CountDownLatch(1);
+        Artist artist = new Artist();
+        artist.setId("2TI7q");
+        trackListTopByArtistAsyncTask = new TrackListTopByArtistAsyncTask(new ApiResultListener<List<Track>>() {
+            @Override
+            public void onResult(List<Track> trackList) {
+                assertNotNull("Track list is null", trackList);
+                assertTrue("Any track found", trackList.size() == 0);
+                signal.countDown();
+            }
+
+            @Override
+            public void onException(Exception exception) {
+                fail(exception.getMessage());
+                signal.countDown();
             }
         });
 

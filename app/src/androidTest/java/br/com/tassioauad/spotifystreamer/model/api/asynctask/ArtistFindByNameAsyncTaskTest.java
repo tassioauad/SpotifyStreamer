@@ -20,7 +20,7 @@ public class ArtistFindByNameAsyncTaskTest extends AndroidTestCase {
 
     }
 
-    public void testDoInBackground() throws Exception {
+    public void testDoInBackground_ValidArtistName() throws Exception {
         final CountDownLatch signal = new CountDownLatch(1);
         artistFindByNameAsyncTask = new ArtistFindByNameAsyncTask(new ApiResultListener<List<Artist>>() {
 
@@ -39,6 +39,28 @@ public class ArtistFindByNameAsyncTaskTest extends AndroidTestCase {
         });
 
         artistFindByNameAsyncTask.execute("Dave Matthews Band");
+        signal.await();
+    }
+
+    public void testDoInBackground_InvalidArtistName() throws Exception {
+        final CountDownLatch signal = new CountDownLatch(1);
+        artistFindByNameAsyncTask = new ArtistFindByNameAsyncTask(new ApiResultListener<List<Artist>>() {
+
+            @Override
+            public void onResult(List<Artist> artistList) {
+                assertNotNull("Artist list is null", artistList);
+                assertTrue("There should not be an item in this list!", artistList.size() == 0 );
+                signal.countDown();
+            }
+
+            @Override
+            public void onException(Exception exception) {
+                fail(exception.getMessage());
+                signal.countDown();
+            }
+        });
+
+        artistFindByNameAsyncTask.execute("##.*");
         signal.await();
     }
 }

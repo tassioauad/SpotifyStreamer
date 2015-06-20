@@ -20,7 +20,7 @@ public class TrackApiImplTest extends AndroidTestCase {
 
     }
 
-    public void testFindTopTenTrack() throws Exception {
+    public void testFindTopTenTrack_ValidArtist() throws Exception {
         trackApi = new TrackApiImpl();
         final CountDownLatch signal = new CountDownLatch(1);
         Artist artist = new Artist();
@@ -36,6 +36,31 @@ public class TrackApiImplTest extends AndroidTestCase {
             @Override
             public void onException(Exception exception) {
                 fail(exception.getMessage());
+                signal.countDown();
+            }
+        });
+
+        trackApi.findTopTenTrack(artist);
+        signal.await();
+    }
+
+    public void testFindTopTenTrack_InvalidArtist() throws Exception {
+        trackApi = new TrackApiImpl();
+        final CountDownLatch signal = new CountDownLatch(1);
+        Artist artist = new Artist();
+        artist.setId("###");
+        trackApi.setApiResultListener(new ApiResultListener<List<Track>>() {
+            @Override
+            public void onResult(List<Track> trackList) {
+                assertNotNull("Track list is null", trackList);
+                assertTrue("Any track found", trackList.size() == 0);
+                signal.countDown();
+            }
+
+            @Override
+            public void onException(Exception exception) {
+                fail(exception.getMessage());
+                signal.countDown();
             }
         });
 
