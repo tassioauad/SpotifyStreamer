@@ -50,7 +50,7 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
                 doAnswer(new Answer() {
                     @Override
                     public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-                        List<Artist> artistList = new ArrayList<Artist>();
+                        List<Artist> artistList = new ArrayList<>();
                         artistList.add(new Artist());
                         apiResultListenerArgumentCaptor.getValue().onResult(artistList);
                         return null;
@@ -78,7 +78,7 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
                 doAnswer(new Answer() {
                     @Override
                     public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-                        List<Artist> artistList = new ArrayList<Artist>();
+                        List<Artist> artistList = new ArrayList<>();
                         apiResultListenerArgumentCaptor.getValue().onResult(artistList);
                         return null;
                     }
