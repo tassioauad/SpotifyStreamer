@@ -9,9 +9,9 @@ import java.util.Map;
 
 import br.com.tassioauad.spotifystreamer.model.api.ApiResultListener;
 import br.com.tassioauad.spotifystreamer.model.api.exception.BadRequestException;
+import br.com.tassioauad.spotifystreamer.model.api.exception.NotFoundException;
 import br.com.tassioauad.spotifystreamer.model.entity.Artist;
 import br.com.tassioauad.spotifystreamer.model.entity.Track;
-import br.com.tassioauad.spotifystreamer.utils.exception.NotFoundException;
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
 import kaaes.spotify.webapi.android.models.Tracks;

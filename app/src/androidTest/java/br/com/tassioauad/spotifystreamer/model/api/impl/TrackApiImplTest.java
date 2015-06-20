@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import br.com.tassioauad.spotifystreamer.model.api.ApiResultListener;
+import br.com.tassioauad.spotifystreamer.model.api.exception.BadRequestException;
 import br.com.tassioauad.spotifystreamer.model.entity.Artist;
 import br.com.tassioauad.spotifystreamer.model.entity.Track;
 
@@ -52,14 +53,13 @@ public class TrackApiImplTest extends AndroidTestCase {
         trackApi.setApiResultListener(new ApiResultListener<List<Track>>() {
             @Override
             public void onResult(List<Track> trackList) {
-                assertNotNull("Track list is null", trackList);
-                assertTrue("Any track found", trackList.size() == 0);
+                fail("Should happen an exception");
                 signal.countDown();
             }
 
             @Override
             public void onException(Exception exception) {
-                fail(exception.getMessage());
+                assertTrue("the exception is not a BadRequestException", exception instanceof BadRequestException);
                 signal.countDown();
             }
         });
