@@ -11,4 +11,8 @@ public interface SearchArtistView {
     void anyArtistFounded();
 
     void lostConnection();
+
+    void showLoadingWarn();
+
+    void hideLoadingWarn();
 }

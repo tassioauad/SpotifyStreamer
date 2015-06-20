@@ -28,6 +28,7 @@ public class SearchArtistPresenter {
     }
 
     public void searchByName(String name) {
+        view.showLoadingWarn();
         artistApi.setApiResultListener(new ApiResultListener() {
             @Override
             public void onResult(Object object) {
@@ -37,6 +38,7 @@ public class SearchArtistPresenter {
                 } else {
                     view.showArtists(artistList);
                 }
+                view.hideLoadingWarn();
             }
 
             @Override
@@ -48,6 +50,7 @@ public class SearchArtistPresenter {
                 } else {
                     view.anyArtistFounded();
                 }
+                view.hideLoadingWarn();
             }
         });
 

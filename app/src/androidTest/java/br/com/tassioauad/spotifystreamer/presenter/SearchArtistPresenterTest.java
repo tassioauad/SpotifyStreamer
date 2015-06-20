@@ -67,6 +67,8 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
         verify(view, times(1)).showArtists(anyListOf(Artist.class));
         verify(view, never()).anyArtistFounded();
         verify(view, never()).lostConnection();
+        verify(view, times(1)).showLoadingWarn();
+        verify(view, times(1)).hideLoadingWarn();
     }
 
     public void testSearchByName_InvalidName() {
@@ -92,6 +94,8 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
         verify(view, never()).showArtists(anyListOf(Artist.class));
         verify(view, times(1)).anyArtistFounded();
         verify(view, never()).lostConnection();
+        verify(view, times(1)).showLoadingWarn();
+        verify(view, times(1)).hideLoadingWarn();
     }
 
     public void testSearchByName_BadRequest() {
@@ -116,6 +120,8 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
         verify(view, never()).showArtists(anyListOf(Artist.class));
         verify(view, times(1)).anyArtistFounded();
         verify(view, never()).lostConnection();
+        verify(view, times(1)).showLoadingWarn();
+        verify(view, times(1)).hideLoadingWarn();
     }
 
     public void testSearchByName_NotFound() {
@@ -140,6 +146,8 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
         verify(view, never()).showArtists(anyListOf(Artist.class));
         verify(view, never()).anyArtistFounded();
         verify(view, times(1)).lostConnection();
+        verify(view, times(1)).showLoadingWarn();
+        verify(view, times(1)).hideLoadingWarn();
     }
 
     public void testSearchByName_OtherException() {
@@ -164,6 +172,8 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
         verify(view, never()).showArtists(anyListOf(Artist.class));
         verify(view, times(1)).anyArtistFounded();
         verify(view, never()).lostConnection();
+        verify(view, times(1)).showLoadingWarn();
+        verify(view, times(1)).hideLoadingWarn();
     }
 
     public void testFinish() {

@@ -38,4 +38,14 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
     public void lostConnection() {
 
     }
+
+    @Override
+    public void showLoadingWarn() {
+
+    }
+
+    @Override
+    public void hideLoadingWarn() {
+
+    }
 }
