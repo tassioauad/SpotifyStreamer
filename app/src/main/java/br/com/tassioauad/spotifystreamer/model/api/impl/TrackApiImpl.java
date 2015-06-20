@@ -12,6 +12,7 @@ public class TrackApiImpl extends GenericApi implements TrackApi {
 
     private TrackListTopByArtistAsyncTask trackListTopByArtistAsyncTask;
 
+    @Override
     public void findTopTenTrack(Artist artist) {
         verifyApiResultListenerIsSetted();
         trackListTopByArtistAsyncTask = new TrackListTopByArtistAsyncTask(getApiResultListener());
