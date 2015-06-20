@@ -40,7 +40,7 @@ public class SearchTopTrackPresenterTest extends AndroidTestCase {
         apiResultListenerArgumentCaptor = ArgumentCaptor.forClass(ApiResultListener.class);
     }
 
-    public void searchByArtist_ValidArtist() {
+    public void testSearchByArtist_ValidArtist() {
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
@@ -68,7 +68,7 @@ public class SearchTopTrackPresenterTest extends AndroidTestCase {
         verify(view, times(1)).hideLoadingWarn();
     }
 
-    public void searchByArtist_InvalidArtist() {
+    public void testSearchByArtist_InvalidArtist() {
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
@@ -95,7 +95,7 @@ public class SearchTopTrackPresenterTest extends AndroidTestCase {
         verify(view, times(1)).hideLoadingWarn();
     }
 
-    public void searchByArtist_BadRequest() {
+    public void testSearchByArtist_BadRequest() {
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
@@ -121,7 +121,7 @@ public class SearchTopTrackPresenterTest extends AndroidTestCase {
         verify(view, times(1)).hideLoadingWarn();
     }
 
-    public void searchByArtist_NotFound() {
+    public void testSearchByArtist_NotFound() {
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
@@ -147,7 +147,7 @@ public class SearchTopTrackPresenterTest extends AndroidTestCase {
         verify(view, times(1)).hideLoadingWarn();
     }
 
-    public void searchByArtist_OtherException() {
+    public void testSearchByArtist_OtherException() {
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
