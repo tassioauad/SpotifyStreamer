@@ -19,7 +19,7 @@ public class TrackApiImpl extends GenericApi implements TrackApi {
     }
 
     @Override
-    public void stopExecution() {
+    public void stopAnyExecution() {
         if (trackListTopByArtistAsyncTask != null &&  trackListTopByArtistAsyncTask.getStatus().equals(AsyncTask.Status.RUNNING)) {
             trackListTopByArtistAsyncTask.cancel(true);
         }

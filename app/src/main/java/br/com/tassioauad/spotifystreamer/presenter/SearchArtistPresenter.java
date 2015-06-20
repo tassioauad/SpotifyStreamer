@@ -20,4 +20,8 @@ public class SearchArtistPresenter {
     public void finish() {
 
     }
+
+    public void searchByName(String name) {
+
+    }
 }

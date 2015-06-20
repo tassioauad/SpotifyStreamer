@@ -19,7 +19,7 @@ public class ArtistApiImpl extends GenericApi implements ArtistApi {
     }
 
     @Override
-    public void stopExecution() {
+    public void stopAnyExecution() {
         if (artistFindByNameAsyncTask != null &&  artistFindByNameAsyncTask.getStatus().equals(AsyncTask.Status.RUNNING)) {
             artistFindByNameAsyncTask.cancel(true);
         }

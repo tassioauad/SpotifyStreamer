@@ -6,6 +6,6 @@ public interface Api {
 
     void setApiResultListener(ApiResultListener listener);
 
-    void stopExecution();
+    void stopAnyExecution();
 
 }

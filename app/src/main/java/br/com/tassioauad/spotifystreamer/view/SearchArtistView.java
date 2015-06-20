@@ -7,4 +7,8 @@ import br.com.tassioauad.spotifystreamer.model.entity.Artist;
 
 public interface SearchArtistView {
     void showArtists(List<Artist> artists);
+
+    void anyArtistFounded();
+
+    void lostConnection();
 }
