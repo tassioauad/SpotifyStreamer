@@ -3,7 +3,9 @@ package br.com.tassioauad.spotifystreamer.utils.dagger;
 import android.app.Application;
 
 import br.com.tassioauad.spotifystreamer.model.api.ArtistApi;
+import br.com.tassioauad.spotifystreamer.model.api.TrackApi;
 import br.com.tassioauad.spotifystreamer.model.api.impl.ArtistApiImpl;
+import br.com.tassioauad.spotifystreamer.model.api.impl.TrackApiImpl;
 import dagger.Module;
 import dagger.Provides;
 
@@ -22,6 +24,11 @@ public class ApiModule {
     @Provides
     public ArtistApi provideArtistApi() {
         return new ArtistApiImpl();
+    }
+
+    @Provides
+    public TrackApi provideTrackApi() {
+        return new TrackApiImpl();
     }
 
 }

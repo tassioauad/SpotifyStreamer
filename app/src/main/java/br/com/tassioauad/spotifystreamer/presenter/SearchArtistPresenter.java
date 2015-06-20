@@ -19,10 +19,6 @@ public class SearchArtistPresenter {
         this.artistApi = artistApi;
     }
 
-    public void init() {
-
-    }
-
     public void finish() {
         artistApi.stopAnyExecution();
     }
