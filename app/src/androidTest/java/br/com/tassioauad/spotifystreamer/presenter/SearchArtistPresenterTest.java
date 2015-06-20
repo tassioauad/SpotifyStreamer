@@ -52,7 +52,7 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
                     public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
                         List<Artist> artistList = new ArrayList<Artist>();
                         artistList.add(new Artist());
-                        apiResultListenerArgumentCaptor.capture().onResult(artistList);
+                        apiResultListenerArgumentCaptor.getValue().onResult(artistList);
                         return null;
                     }
                 }).when(artistApi).findByName(anyString());
@@ -77,7 +77,7 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
                     @Override
                     public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
                         List<Artist> artistList = new ArrayList<Artist>();
-                        apiResultListenerArgumentCaptor.capture().onResult(artistList);
+                        apiResultListenerArgumentCaptor.getValue().onResult(artistList);
                         return null;
                     }
                 }).when(artistApi).findByName(anyString());
@@ -101,7 +101,7 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
                 doAnswer(new Answer() {
                     @Override
                     public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-                        apiResultListenerArgumentCaptor.capture().onException(new BadRequestException());
+                        apiResultListenerArgumentCaptor.getValue().onException(new BadRequestException());
                         return null;
                     }
                 }).when(artistApi).findByName(anyString());
@@ -125,7 +125,7 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
                 doAnswer(new Answer() {
                     @Override
                     public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-                        apiResultListenerArgumentCaptor.capture().onException(new NotFoundException());
+                        apiResultListenerArgumentCaptor.getValue().onException(new NotFoundException());
                         return null;
                     }
                 }).when(artistApi).findByName(anyString());
@@ -149,7 +149,7 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
                 doAnswer(new Answer() {
                     @Override
                     public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-                        apiResultListenerArgumentCaptor.capture().onException(new Exception());
+                        apiResultListenerArgumentCaptor.getValue().onException(new Exception());
                         return null;
                     }
                 }).when(artistApi).findByName(anyString());

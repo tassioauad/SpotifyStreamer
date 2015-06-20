@@ -28,4 +28,14 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
     public void showArtists(List<Artist> artists) {
 
     }
+
+    @Override
+    public void anyArtistFounded() {
+
+    }
+
+    @Override
+    public void lostConnection() {
+
+    }
 }
