@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="listviewitem_image_width">64dp</dimen>
+    <dimen name="listviewitem_image_height">64dp</dimen>
+    <dimen name="listviewitem_image_margin">5dp</dimen>
+    <dimen name="textview_secondtitle_size">16sp</dimen>
+    <dimen name="layout_padding">16sp</dimen>
+    <dimen name="listviewitem_margin">5dp</dimen>
+</resources>

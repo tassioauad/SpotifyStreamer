@@ -9,8 +9,6 @@ public class Artist {
 
     private String name;
 
-    private String type;
-
     private String imageUrl;
 
     private String smallImageUrl;
@@ -21,7 +19,6 @@ public class Artist {
     public Artist(kaaes.spotify.webapi.android.models.Artist artist) {
         id = artist.id;;
         name = artist.name;
-        type = artist.type;
         for (Image image : artist.images) {
             if( (image.width >= 150) && (image.width <= 250) ){
                 smallImageUrl = image.url;
@@ -35,7 +32,6 @@ public class Artist {
     public Artist(ArtistSimple artistSimple) {
         id = artistSimple.id;;
         name = artistSimple.name;
-        type = artistSimple.type;
     }
 
     public String getId() {
@@ -52,14 +48,6 @@ public class Artist {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getImageUrl() {
