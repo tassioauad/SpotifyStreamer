@@ -2,7 +2,9 @@ package br.com.tassioauad.spotifystreamer.view.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.widget.ListView;
 
 import java.util.List;
@@ -11,9 +13,9 @@ import javax.inject.Inject;
 
 import br.com.tassioauad.spotifystreamer.R;
 import br.com.tassioauad.spotifystreamer.SpotifyStreamerApplication;
-import br.com.tassioauad.spotifystreamer.utils.dagger.SearchArtistModule;
 import br.com.tassioauad.spotifystreamer.model.entity.Artist;
 import br.com.tassioauad.spotifystreamer.presenter.SearchArtistPresenter;
+import br.com.tassioauad.spotifystreamer.utils.dagger.SearchArtistModule;
 import br.com.tassioauad.spotifystreamer.view.SearchArtistView;
 import br.com.tassioauad.spotifystreamer.view.listviewadapter.ArtistListViewAdapter;
 
@@ -33,8 +35,31 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
         setSupportActionBar(toolbar);
 
         listViewArtist = (ListView) findViewById(R.id.listview_artist);
+    }
 
-        //presenter.searchByName("Dave");
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.searchartist, menu);
+
+        final SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String artistName) {
+                presenter.searchByName(artistName);
+                searchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
+
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
