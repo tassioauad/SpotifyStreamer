@@ -4,6 +4,7 @@
     <dimen name="listviewitem_image_height">64dp</dimen>
     <dimen name="listviewitem_image_margin">5dp</dimen>
     <dimen name="textview_secondtitle_size">16sp</dimen>
+    <dimen name="textview_bigwarn_size">30sp</dimen>
     <dimen name="layout_padding">16sp</dimen>
     <dimen name="listviewitem_margin">5dp</dimen>
 </resources>

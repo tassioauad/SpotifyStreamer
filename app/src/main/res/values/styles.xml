@@ -32,4 +32,9 @@
         <item name="android:textSize">@dimen/textview_secondtitle_size</item>
     </style>
 
+    <style name="TextViewBigWarn">
+        <item name="android:textColor">@color/green</item>
+        <item name="android:textSize">@dimen/textview_bigwarn_size</item>
+        <item name="android:textStyle">italic</item>
+    </style>
 </resources>

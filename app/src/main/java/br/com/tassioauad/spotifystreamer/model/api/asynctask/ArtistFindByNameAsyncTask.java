@@ -35,13 +35,17 @@ public class ArtistFindByNameAsyncTask extends GenericAsyncTask<String, Void, Li
             return new AsyncTaskResult<>(artistList);
 
         } catch (RetrofitError error) {
-            switch(error.getResponse().getStatus()) {
-                case HttpURLConnection.HTTP_BAD_REQUEST:
-                    return new AsyncTaskResult<>(new BadRequestException());
-                case HttpURLConnection.HTTP_NOT_FOUND:
-                    return new AsyncTaskResult<>(new NotFoundException());
-                default:
-                    return new AsyncTaskResult<>(error);
+            if(error.getResponse() == null) {
+                return new AsyncTaskResult<>(new NotFoundException());
+            } else {
+                switch(error.getResponse().getStatus()) {
+                    case HttpURLConnection.HTTP_BAD_REQUEST:
+                        return new AsyncTaskResult<>(new BadRequestException());
+                    case HttpURLConnection.HTTP_NOT_FOUND:
+                        return new AsyncTaskResult<>(new NotFoundException());
+                    default:
+                        return new AsyncTaskResult<>(error);
+                }
             }
         }
 

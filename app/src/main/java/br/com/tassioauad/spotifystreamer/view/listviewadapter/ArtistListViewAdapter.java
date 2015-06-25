@@ -65,8 +65,7 @@ public class ArtistListViewAdapter extends BaseAdapter {
         Glide.with(context)
                 .load(artist.getSmallImageUrl())
                 .centerCrop()
-
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.drawable.icon_oldmic)
                 .crossFade()
                 .into(viewHolder.imageViewPhoto);
 
