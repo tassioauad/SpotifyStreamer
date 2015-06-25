@@ -30,7 +30,7 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
 
     @Inject
     SearchArtistPresenter presenter;
-    private List<Artist> artistList;
+    private List<Artist> artistList = new ArrayList<>();
 
     private LinearLayout linearLayoutLostConnection;
     private LinearLayout linearLayoutNotFound;
@@ -49,7 +49,6 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
         linearLayoutNotFound = (LinearLayout) findViewById(R.id.linearlayout_notfound);
         listViewArtist = (ListView) findViewById(R.id.listview_artist);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
-
 
         if (savedInstanceState != null) {
             Artist[] artistArray = (Artist[]) savedInstanceState.getParcelableArray(ARTIST_LIST_BUNDLE_KEY);
@@ -83,8 +82,10 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArray(ARTIST_LIST_BUNDLE_KEY,
-                artistList.toArray(new Artist[artistList.size()]));
+        if(artistList != null && artistList.size() > 0) {
+            outState.putParcelableArray(ARTIST_LIST_BUNDLE_KEY,
+                    artistList.toArray(new Artist[artistList.size()]));
+        }
         super.onSaveInstanceState(outState);
     }
 
