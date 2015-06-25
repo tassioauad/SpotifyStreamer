@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -24,8 +26,11 @@ import br.com.tassioauad.spotifystreamer.view.listviewadapter.ArtistListViewAdap
 
 public class SearchArtistActivity extends AppCompatActivity implements SearchArtistView {
 
+    private final String ARTIST_LIST_BUNDLE_KEY = "artistlistbundlekey";
+
     @Inject
     SearchArtistPresenter presenter;
+    private List<Artist> artistList;
 
     private LinearLayout linearLayoutLostConnection;
     private LinearLayout linearLayoutNotFound;
@@ -44,6 +49,13 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
         linearLayoutNotFound = (LinearLayout) findViewById(R.id.linearlayout_notfound);
         listViewArtist = (ListView) findViewById(R.id.listview_artist);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
+
+
+        if (savedInstanceState != null) {
+            Artist[] artistArray = (Artist[]) savedInstanceState.getParcelableArray(ARTIST_LIST_BUNDLE_KEY);
+            showArtists(Arrays.asList(artistArray));
+            artistList = Arrays.asList(artistArray);
+        }
     }
 
     @Override
@@ -69,13 +81,20 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArray(ARTIST_LIST_BUNDLE_KEY,
+                artistList.toArray(new Artist[artistList.size()]));
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
-    public void showArtists(List<Artist> artists) {
+    public void showArtists(List<Artist> artistList) {
+        this.artistList = artistList;
         linearLayoutNotFound.setVisibility(View.GONE);
         linearLayoutLostConnection.setVisibility(View.GONE);
         listViewArtist.setVisibility(View.VISIBLE);
-        listViewArtist.setAdapter(new ArtistListViewAdapter(this, artists));
+        listViewArtist.setAdapter(new ArtistListViewAdapter(this, artistList));
     }
 
     @Override

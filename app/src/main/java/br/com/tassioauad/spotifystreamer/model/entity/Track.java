@@ -1,10 +1,13 @@
 package br.com.tassioauad.spotifystreamer.model.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Track {
+public class Track implements Parcelable {
 
     private String id;
 
@@ -59,4 +62,34 @@ public class Track {
         this.artistList = artistList;
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeParcelable(this.album, flags);
+        dest.writeTypedList(artistList);
+    }
+
+    private Track(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.album = in.readParcelable(Album.class.getClassLoader());
+        in.readTypedList(artistList, Artist.CREATOR);
+    }
+
+    public static final Parcelable.Creator<Track> CREATOR = new Parcelable.Creator<Track>() {
+        public Track createFromParcel(Parcel source) {
+            return new Track(source);
+        }
+
+        public Track[] newArray(int size) {
+            return new Track[size];
+        }
+    };
 }

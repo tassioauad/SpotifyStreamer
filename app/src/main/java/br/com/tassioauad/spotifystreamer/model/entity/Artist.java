@@ -1,9 +1,14 @@
 package br.com.tassioauad.spotifystreamer.model.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 import kaaes.spotify.webapi.android.models.ArtistSimple;
 import kaaes.spotify.webapi.android.models.Image;
 
-public class Artist {
+public class Artist implements Parcelable {
 
     private String id;
 
@@ -65,4 +70,34 @@ public class Artist {
     public void setSmallImageUrl(String smallImageUrl) {
         this.smallImageUrl = smallImageUrl;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.imageUrl);
+        dest.writeString(this.smallImageUrl);
+    }
+
+    private Artist(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.imageUrl = in.readString();
+        this.smallImageUrl = in.readString();
+    }
+
+    public static final Parcelable.Creator<Artist> CREATOR = new Parcelable.Creator<Artist>() {
+        public Artist createFromParcel(Parcel source) {
+            return new Artist(source);
+        }
+
+        public Artist[] newArray(int size) {
+            return new Artist[size];
+        }
+    };
 }
