@@ -62,6 +62,7 @@ public class ArtistListViewAdapter extends BaseAdapter {
         viewHolder.clear();
 
         viewHolder.textViewName.setText(artist.getName());
+        String imageUrl = artist.getSmallImageUrl() == null ? artist.getImageUrl() : artist.getSmallImageUrl();
         Glide.with(context)
                 .load(artist.getSmallImageUrl())
                 .centerCrop()

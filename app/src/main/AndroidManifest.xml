@@ -16,7 +16,9 @@
                 android:resource="@xml/searchable"/>
         </activity>
         <activity android:name=".view.activity.SearchTopTrackActivity">
-
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activity.SearchArtistActivity" />
         </activity>
     </application>
 

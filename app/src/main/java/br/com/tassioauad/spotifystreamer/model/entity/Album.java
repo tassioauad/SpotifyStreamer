@@ -23,10 +23,9 @@ public class Album implements Parcelable {
         id = album.id;
         name = album.name;
         for (Image image : album.images) {
-            if( (image.width >= 150) && (image.width <= 250) ){
+            if ((image.width >= 150) && (image.width <= 250)) {
                 smallImageUrl = image.url;
-            }
-            else if( (image.width >= 600) && (image.width <= 700) ){
+            } else if ((image.width >= 600) && (image.width <= 700)) {
                 imageUrl = image.url;
             }
         }

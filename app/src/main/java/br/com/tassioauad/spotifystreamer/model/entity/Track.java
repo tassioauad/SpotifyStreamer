@@ -24,7 +24,7 @@ public class Track implements Parcelable {
         id = track.id;
         name = track.name;
         album = new Album(track.album);
-        for(kaaes.spotify.webapi.android.models.ArtistSimple artistSimple : track.artists) {
+        for (kaaes.spotify.webapi.android.models.ArtistSimple artistSimple : track.artists) {
             artistList.add(new Artist(artistSimple));
         }
 

@@ -22,20 +22,19 @@ public class Artist implements Parcelable {
     }
 
     public Artist(kaaes.spotify.webapi.android.models.Artist artist) {
-        id = artist.id;;
+        id = artist.id;
         name = artist.name;
         for (Image image : artist.images) {
-            if( (image.width >= 150) && (image.width <= 250) ){
+            if ((image.width >= 150) && (image.width <= 250)) {
                 smallImageUrl = image.url;
-            }
-            else if( (image.width >= 600) && (image.width <= 700) ){
+            } else if ((image.width >= 600) && (image.width <= 700)) {
                 imageUrl = image.url;
             }
         }
     }
 
     public Artist(ArtistSimple artistSimple) {
-        id = artistSimple.id;;
+        id = artistSimple.id;
         name = artistSimple.name;
     }
 

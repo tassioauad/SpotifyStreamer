@@ -6,6 +6,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -52,8 +53,10 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
 
         if (savedInstanceState != null) {
             Artist[] artistArray = (Artist[]) savedInstanceState.getParcelableArray(ARTIST_LIST_BUNDLE_KEY);
-            showArtists(Arrays.asList(artistArray));
-            artistList = Arrays.asList(artistArray);
+            if(artistArray != null) {
+                showArtists(Arrays.asList(artistArray));
+                artistList = Arrays.asList(artistArray);
+            }
         }
     }
 
@@ -82,7 +85,7 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        if(artistList != null && artistList.size() > 0) {
+        if (artistList != null && artistList.size() > 0) {
             outState.putParcelableArray(ARTIST_LIST_BUNDLE_KEY,
                     artistList.toArray(new Artist[artistList.size()]));
         }
@@ -96,6 +99,13 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
         linearLayoutLostConnection.setVisibility(View.GONE);
         listViewArtist.setVisibility(View.VISIBLE);
         listViewArtist.setAdapter(new ArtistListViewAdapter(this, artistList));
+        listViewArtist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(SearchTopTrackActivity.newIntent(SearchArtistActivity.this,
+                        (Artist) parent.getAdapter().getItem(position)));
+            }
+        });
     }
 
     @Override

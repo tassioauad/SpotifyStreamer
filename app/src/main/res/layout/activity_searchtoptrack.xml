@@ -9,18 +9,64 @@
         android:id="@+id/toolbar"
         layout="@layout/app_bar" />
 
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+    <ListView
+        android:id="@+id/listview_track"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/ListView"
+        android:visibility="visible"/>
 
     <LinearLayout
+        android:id="@+id/linearlayout_notfound"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <ListView
-            android:id="@+id/listview_track"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_search_large"/>
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="@style/ListView"/>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/TextViewBigWarn"
+            android:text="@string/searchtoptrack_anytrackwasfound"/>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearlayout_lostconnection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_plug"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/TextViewBigWarn"
+            android:text="@string/searchtoptrack_theconnectionwaslost"/>
+
+    </LinearLayout>
 
 </LinearLayout>
