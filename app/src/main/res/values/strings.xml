@@ -2,7 +2,9 @@
     <string name="app_name">Spotify Streamer</string>
     <string name="artist_search_hint">Artist\'s name…</string>
     <string name="searchartist_anyartistwasfound">Any artist was found :\'(</string>
+    <string name="searchartist_toast_anyartistwasfound">Any artist was found. Please, refine your search</string>
     <string name="searchtoptrack_anytrackwasfound">Any track was found :\'(</string>
+    <string name="searchtoptrack_toast_anytrackwasfound">Any track was found. Please, refine your search</string>
     <string name="searchartist_theconnectionwaslost">The connection was lost :\'(</string>
     <string name="searchtoptrack_theconnectionwaslost">The connection was lost :\'(</string>
     <string name="searchtoptrack_title">"%1$s's Top Tracks "</string>

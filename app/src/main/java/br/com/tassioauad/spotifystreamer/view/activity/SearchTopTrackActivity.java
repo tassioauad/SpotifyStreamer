@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -111,6 +112,9 @@ public class SearchTopTrackActivity extends AppCompatActivity implements SearchT
         linearLayoutNotFound.setVisibility(View.VISIBLE);
         linearLayoutLostConnection.setVisibility(View.GONE);
         listViewTrack.setVisibility(View.GONE);
+        Toast toast = Toast.makeText(this, getString(R.string.searchtoptrack_toast_anytrackwasfound), Toast.LENGTH_SHORT);
+        toast.getView().setBackgroundColor(getResources().getColor(R.color.green));
+        toast.show();
     }
 
     @Override

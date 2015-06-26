@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -113,6 +114,9 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
         linearLayoutNotFound.setVisibility(View.VISIBLE);
         linearLayoutLostConnection.setVisibility(View.GONE);
         listViewArtist.setVisibility(View.GONE);
+        Toast toast = Toast.makeText(this, getString(R.string.searchartist_toast_anyartistwasfound), Toast.LENGTH_SHORT);
+        toast.getView().setBackgroundColor(getResources().getColor(R.color.green));
+        toast.show();
     }
 
     @Override
