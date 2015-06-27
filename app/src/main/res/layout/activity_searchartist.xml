@@ -23,7 +23,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         style="@style/ListView"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_letssearch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/up_arrow"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/TextViewBigWarn"
+            android:text="@string/searchartist_letsfindfavoriteartist"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearlayout_notfound"

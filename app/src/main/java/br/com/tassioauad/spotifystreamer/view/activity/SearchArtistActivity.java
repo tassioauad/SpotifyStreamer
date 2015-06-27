@@ -1,10 +1,12 @@
 package br.com.tassioauad.spotifystreamer.view.activity;
 
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -36,8 +38,10 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
 
     private LinearLayout linearLayoutLostConnection;
     private LinearLayout linearLayoutNotFound;
+    private LinearLayout linearLayoutLetsFindArtist;
     private ListView listViewArtist;
     private ProgressBar progressBar;
+    private MenuItem menuItemSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,13 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
 
         linearLayoutLostConnection = (LinearLayout) findViewById(R.id.linearlayout_lostconnection);
         linearLayoutNotFound = (LinearLayout) findViewById(R.id.linearlayout_notfound);
+        linearLayoutLetsFindArtist = (LinearLayout) findViewById(R.id.linearlayout_letssearch);
+        linearLayoutLetsFindArtist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MenuItemCompat.expandActionView(menuItemSearchView);
+            }
+        });
         listViewArtist = (ListView) findViewById(R.id.listview_artist);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
@@ -65,7 +76,9 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.searchartist, menu);
 
-        final SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        menuItemSearchView = menu.findItem(R.id.search);
+        final SearchView searchView = (SearchView) menuItemSearchView.getActionView();
+        searchView.setQueryHint(getString(R.string.artist_search_hint));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
@@ -98,6 +111,7 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
         this.artistList = artistList;
         linearLayoutNotFound.setVisibility(View.GONE);
         linearLayoutLostConnection.setVisibility(View.GONE);
+        linearLayoutLetsFindArtist.setVisibility(View.GONE);
         listViewArtist.setVisibility(View.VISIBLE);
         listViewArtist.setAdapter(new ArtistListViewAdapter(this, artistList));
         listViewArtist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -113,6 +127,7 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
     public void anyArtistFounded() {
         linearLayoutNotFound.setVisibility(View.VISIBLE);
         linearLayoutLostConnection.setVisibility(View.GONE);
+        linearLayoutLetsFindArtist.setVisibility(View.GONE);
         listViewArtist.setVisibility(View.GONE);
         Toast toast = Toast.makeText(this, getString(R.string.searchartist_toast_anyartistwasfound), Toast.LENGTH_SHORT);
         toast.getView().setBackgroundColor(getResources().getColor(R.color.green));
@@ -123,6 +138,7 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
     public void lostConnection() {
         linearLayoutNotFound.setVisibility(View.GONE);
         linearLayoutLostConnection.setVisibility(View.VISIBLE);
+        linearLayoutLetsFindArtist.setVisibility(View.GONE);
         listViewArtist.setVisibility(View.GONE);
     }
 
