@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="deeporange500">#ff5722</color>
+    <color name="deeporange700">#e64a19</color>
+    <color name="deeporange100">#ffccbc</color>
+    <color name="deeporange50">#fbe9e7</color>
+    <color name="white">#ffffff</color>
+    <color name="purple500">#9c27b0</color>
+    <color name="gray900">#212121</color>
+    <color name="gray200">#eeeeee</color>
+    <color name="green">#7EBC89</color>
+</resources>

@@ -1,0 +1,45 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/deeporange500</item>
+        <item name="colorPrimaryDark">@color/deeporange700</item>
+        <item name="colorAccent">@color/purple500</item>
+    </style>
+
+    <style name="ActivityLayout">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="ListView">
+        <item name="android:divider">@color/gray200</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:padding">@dimen/layout_padding</item>
+    </style>
+
+    <style name="ListViewItem">
+        <item name="android:background">@drawable/listviewbackground</item>
+    </style>
+
+    <style name="ListViewItemImagem">
+        <item name="android:layout_width">@dimen/listviewitem_image_width</item>
+        <item name="android:layout_height">@dimen/listviewitem_image_height</item>
+        <item name="android:layout_margin">@dimen/listviewitem_image_margin</item>
+    </style>
+
+    <style name="TextViewSecondTitle">
+        <item name="android:textColor">@color/gray900</item>
+        <item name="android:textSize">@dimen/textview_secondtitle_size</item>
+    </style>
+
+    <style name="TextViewCommon">
+        <item name="android:textColor">@color/gray900</item>
+        <item name="android:textSize">@dimen/textview_common_size</item>
+    </style>
+
+    <style name="TextViewBigWarn">
+        <item name="android:textColor">@color/green</item>
+        <item name="android:textSize">@dimen/textview_bigwarn_size</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+</resources>
