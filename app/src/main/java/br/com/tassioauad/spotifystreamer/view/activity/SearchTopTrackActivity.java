@@ -66,7 +66,7 @@ public class SearchTopTrackActivity extends AppCompatActivity implements SearchT
             if(artist == null) {
                 anyTrackFounded();
             } else {
-                getSupportActionBar().setTitle(getString(R.string.searchtoptrack_title, artist.getName()));
+                getSupportActionBar().setSubtitle(artist.getName());
                 presenter.searchByArtist(artist);
             }
         }
