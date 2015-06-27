@@ -7,6 +7,6 @@
     <string name="searchtoptrack_toast_anytrackwasfound">Any track was found. Please, refine your search</string>
     <string name="searchartist_theconnectionwaslost">The connection was lost :\'(</string>
     <string name="searchtoptrack_theconnectionwaslost">The connection was lost :\'(</string>
-    <string name="searchtoptrack_title">"Top 10 Tracks "</string>
+    <string name="searchtoptrack_title">Top 10 Tracks</string>
     <string name="searchartist_letsfindfavoriteartist">Let\'s find your favorite artist!\nClick here!</string>
 </resources>

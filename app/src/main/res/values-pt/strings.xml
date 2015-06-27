@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Spotify Streamer</string>
+    <string name="artist_search_hint">Buscar Artista</string>
+    <string name="searchartist_anyartistwasfound">Nenhum artista encontrado :\'(</string>
+    <string name="searchartist_letsfindfavoriteartist">Vamos buscar seu artista favorito!\nClique aqui!</string>
+    <string name="searchartist_theconnectionwaslost">Conexão perdida  :\'(</string>
+    <string name="searchartist_toast_anyartistwasfound">Nenhum artista foi encontrado. Por favor, melhore sua busca.</string>
+    <string name="searchtoptrack_anytrackwasfound">Nenhuma música encontrada  :\'(</string>
+    <string name="searchtoptrack_theconnectionwaslost">Conexão perdida  :\'(</string>
+    <string name="searchtoptrack_title">As 10 Mais</string>
+    <string name="searchtoptrack_toast_anytrackwasfound">Nenhuma música encontrada. Por favor, refine sua busca.</string>
+</resources>
