@@ -59,8 +59,10 @@ public class SearchTopTrackActivity extends AppCompatActivity implements SearchT
 
         if (savedInstanceState != null) {
             Track[] trackArray = (Track[]) savedInstanceState.getParcelableArray(TRACK_LIST_BUNDLE_KEY);
-            showTracks(Arrays.asList(trackArray));
-            trackList = Arrays.asList(trackArray);
+            if(trackArray != null) {
+                showTracks(Arrays.asList(trackArray));
+                trackList = Arrays.asList(trackArray);
+            }
         } else {
             Artist artist = getIntent().getParcelableExtra(ARTIST_BUNDLE_KEY);
             if(artist == null) {
