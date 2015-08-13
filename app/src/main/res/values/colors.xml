@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="deeporange500">#ff5722</color>
+    <color name="deeporange500_alpha">#2dff5722</color>
     <color name="deeporange700">#e64a19</color>
     <color name="deeporange100">#ffccbc</color>
     <color name="deeporange50">#fbe9e7</color>
