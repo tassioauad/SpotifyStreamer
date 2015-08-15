@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 import br.com.tassioauad.spotifystreamer.R;
 import br.com.tassioauad.spotifystreamer.model.entity.Artist;
-import br.com.tassioauad.spotifystreamer.view.fragment.SearchTopTrackFragment;
+import br.com.tassioauad.spotifystreamer.view.fragment.ListTopTrackFragment;
 
 public class SearchTopTrackActivity extends AppCompatActivity {
 
@@ -31,7 +31,7 @@ public class SearchTopTrackActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_searchtoptrack, SearchTopTrackFragment.newInstance(this, artist))
+                    .replace(R.id.fragment_searchtoptrack, ListTopTrackFragment.newInstance(artist))
                     .commit();
         }
     }

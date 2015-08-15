@@ -14,15 +14,31 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
         android:layout_gravity="center"
-        android:visibility="gone"/>
+        android:indeterminate="true"
+        android:visibility="gone" />
 
-    <FrameLayout
-        android:id="@+id/framelayout_listartistfragment"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <FrameLayout
+            android:id="@+id/framelayout_listartistfragment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:elevation="8dp"/>
+
+        <FrameLayout
+            android:id="@+id/framelayout_listtoptrackfragment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4" />
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/linearlayout_letssearch"
@@ -35,14 +51,14 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/up_arrow"/>
+            android:src="@drawable/up_arrow" />
 
         <TextView
+            style="@style/TextViewBigWarn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            style="@style/TextViewBigWarn"
-            android:text="@string/searchartist_letsfindfavoriteartist"/>
+            android:text="@string/searchartist_letsfindfavoriteartist" />
 
     </LinearLayout>
 
@@ -57,14 +73,14 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_plug"/>
+            android:src="@drawable/icon_plug" />
 
         <TextView
+            style="@style/TextViewBigWarn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            style="@style/TextViewBigWarn"
-            android:text="@string/searchartist_theconnectionwaslost"/>
+            android:text="@string/searchartist_theconnectionwaslost" />
 
     </LinearLayout>
 

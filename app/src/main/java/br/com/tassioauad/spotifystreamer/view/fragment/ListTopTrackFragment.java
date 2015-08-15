@@ -24,10 +24,9 @@ import br.com.tassioauad.spotifystreamer.model.entity.Track;
 import br.com.tassioauad.spotifystreamer.presenter.SearchTopTrackPresenter;
 import br.com.tassioauad.spotifystreamer.utils.dagger.SearchTopTrackModule;
 import br.com.tassioauad.spotifystreamer.view.SearchTopTrackView;
-import br.com.tassioauad.spotifystreamer.view.activity.SearchTopTrackActivity;
 import br.com.tassioauad.spotifystreamer.view.listviewadapter.TrackListViewAdapter;
 
-public class SearchTopTrackFragment extends Fragment implements SearchTopTrackView {
+public class ListTopTrackFragment extends Fragment implements SearchTopTrackView {
 
     private final String TRACK_LIST_BUNDLE_KEY = "tracklistbundlekey";
     private static final String ARTIST_BUNDLE_KEY = "trackbundlekey";
@@ -121,12 +120,12 @@ public class SearchTopTrackFragment extends Fragment implements SearchTopTrackVi
         progressBar.setVisibility(View.GONE);
     }
 
-    public static SearchTopTrackFragment newInstance(SearchTopTrackActivity searchTopTrackActivity, Artist artist) {
-        SearchTopTrackFragment searchTopTrackFragment = new SearchTopTrackFragment();
+    public static ListTopTrackFragment newInstance(Artist artist) {
+        ListTopTrackFragment listTopTrackFragment = new ListTopTrackFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(ARTIST_BUNDLE_KEY, artist);
-        searchTopTrackFragment.setArguments(bundle);
+        listTopTrackFragment.setArguments(bundle);
 
-        return searchTopTrackFragment;
+        return listTopTrackFragment;
     }
 }

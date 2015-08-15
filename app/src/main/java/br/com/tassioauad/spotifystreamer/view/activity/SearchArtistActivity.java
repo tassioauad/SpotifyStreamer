@@ -8,11 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,22 +24,24 @@ import br.com.tassioauad.spotifystreamer.model.entity.Artist;
 import br.com.tassioauad.spotifystreamer.presenter.SearchArtistPresenter;
 import br.com.tassioauad.spotifystreamer.utils.dagger.SearchArtistModule;
 import br.com.tassioauad.spotifystreamer.view.SearchArtistView;
-import br.com.tassioauad.spotifystreamer.view.listviewadapter.ArtistListViewAdapter;
+import br.com.tassioauad.spotifystreamer.view.fragment.ListArtistFragment;
+import br.com.tassioauad.spotifystreamer.view.fragment.ListTopTrackFragment;
 
-public class SearchArtistActivity extends AppCompatActivity implements SearchArtistView {
+public class SearchArtistActivity extends AppCompatActivity implements SearchArtistView, ListArtistFragment.ListArtistListener {
 
     private final String ARTIST_LIST_BUNDLE_KEY = "artistlistbundlekey";
 
     @Inject
     SearchArtistPresenter presenter;
     private List<Artist> artistList = new ArrayList<>();
+    private Boolean twoPanes = true;
 
     private LinearLayout linearLayoutLostConnection;
-    private LinearLayout linearLayoutNotFound;
     private LinearLayout linearLayoutLetsFindArtist;
-    private ListView listViewArtist;
     private ProgressBar progressBar;
     private MenuItem menuItemSearchView;
+    private FrameLayout frameLayoutListArtist;
+    private FrameLayout frameLayoutListTopTrack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +51,12 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        frameLayoutListArtist = (FrameLayout) findViewById(R.id.framelayout_listartistfragment);
+        frameLayoutListTopTrack = (FrameLayout) findViewById(R.id.framelayout_listtoptrackfragment);
+        if(frameLayoutListTopTrack == null) {
+            twoPanes = false;
+        }
         linearLayoutLostConnection = (LinearLayout) findViewById(R.id.linearlayout_lostconnection);
-        linearLayoutNotFound = (LinearLayout) findViewById(R.id.linearlayout_notfound);
         linearLayoutLetsFindArtist = (LinearLayout) findViewById(R.id.linearlayout_letssearch);
         linearLayoutLetsFindArtist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +64,6 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
                 MenuItemCompat.expandActionView(menuItemSearchView);
             }
         });
-        listViewArtist = (ListView) findViewById(R.id.listview_artist);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
         if (savedInstanceState != null) {
@@ -109,37 +112,40 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
     @Override
     public void showArtists(List<Artist> artistList) {
         this.artistList = artistList;
-        linearLayoutNotFound.setVisibility(View.GONE);
         linearLayoutLostConnection.setVisibility(View.GONE);
         linearLayoutLetsFindArtist.setVisibility(View.GONE);
-        listViewArtist.setVisibility(View.VISIBLE);
-        listViewArtist.setAdapter(new ArtistListViewAdapter(this, artistList));
-        listViewArtist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(SearchTopTrackActivity.newIntent(SearchArtistActivity.this,
-                        (Artist) parent.getAdapter().getItem(position)));
-            }
-        });
+        if(twoPanes) {
+            frameLayoutListTopTrack.setVisibility(View.GONE);
+        }
+        frameLayoutListArtist.setVisibility(View.VISIBLE);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.framelayout_listartistfragment, ListArtistFragment.newInstance(this, artistList))
+                .commit();
     }
 
     @Override
     public void anyArtistFounded() {
-        linearLayoutNotFound.setVisibility(View.VISIBLE);
         linearLayoutLostConnection.setVisibility(View.GONE);
         linearLayoutLetsFindArtist.setVisibility(View.GONE);
-        listViewArtist.setVisibility(View.GONE);
-        Toast toast = Toast.makeText(this, getString(R.string.searchartist_toast_anyartistwasfound), Toast.LENGTH_SHORT);
-        toast.getView().setBackgroundColor(getResources().getColor(R.color.green));
-        toast.show();
+        if(twoPanes) {
+            frameLayoutListTopTrack.setVisibility(View.GONE);
+        }
+        frameLayoutListArtist.setVisibility(View.VISIBLE);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.framelayout_listartistfragment, ListArtistFragment.newInstance(this))
+                .commit();
     }
 
     @Override
     public void lostConnection() {
-        linearLayoutNotFound.setVisibility(View.GONE);
         linearLayoutLostConnection.setVisibility(View.VISIBLE);
         linearLayoutLetsFindArtist.setVisibility(View.GONE);
-        listViewArtist.setVisibility(View.GONE);
+        if(twoPanes) {
+            frameLayoutListTopTrack.setVisibility(View.GONE);
+        }
+        frameLayoutListArtist.setVisibility(View.GONE);
     }
 
     @Override
@@ -150,5 +156,18 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
     @Override
     public void hideLoadingWarn() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onArtistSelected(Artist artist) {
+        if(twoPanes) {
+            frameLayoutListTopTrack.setVisibility(View.VISIBLE);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.framelayout_listtoptrackfragment, ListTopTrackFragment.newInstance(artist))
+                    .commit();
+        } else {
+            startActivity(SearchTopTrackActivity.newIntent(this, artist));
+        }
     }
 }
