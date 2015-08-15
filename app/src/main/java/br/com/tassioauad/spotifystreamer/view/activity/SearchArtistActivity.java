@@ -1,6 +1,7 @@
 package br.com.tassioauad.spotifystreamer.view.activity;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -26,6 +27,8 @@ import br.com.tassioauad.spotifystreamer.utils.dagger.SearchArtistModule;
 import br.com.tassioauad.spotifystreamer.view.SearchArtistView;
 import br.com.tassioauad.spotifystreamer.view.fragment.ListArtistFragment;
 import br.com.tassioauad.spotifystreamer.view.fragment.ListTopTrackFragment;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class SearchArtistActivity extends AppCompatActivity implements SearchArtistView, ListArtistFragment.ListArtistListener {
 
@@ -36,36 +39,31 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
     private List<Artist> artistList = new ArrayList<>();
     private Boolean twoPanes = true;
 
-    private LinearLayout linearLayoutLostConnection;
-    private LinearLayout linearLayoutLetsFindArtist;
-    private ProgressBar progressBar;
+    @Bind(R.id.linearlayout_lostconnection) LinearLayout linearLayoutLostConnection;
+    @Bind(R.id.linearlayout_letssearch) LinearLayout linearLayoutLetsFindArtist;
+    @Bind(R.id.progressbar) ProgressBar progressBar;
+    @Bind(R.id.framelayout_listartistfragment) FrameLayout frameLayoutListArtist;
+    @Nullable @Bind(R.id.framelayout_listtoptrackfragment) FrameLayout frameLayoutListTopTrack;
+    @Bind(R.id.toolbar) Toolbar toolbar;
     private MenuItem menuItemSearchView;
-    private FrameLayout frameLayoutListArtist;
-    private FrameLayout frameLayoutListTopTrack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((SpotifyStreamerApplication) getApplication()).getObjectGraph().plus(new SearchArtistModule(this)).inject(this);
         setContentView(R.layout.activity_searchartist);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        frameLayoutListArtist = (FrameLayout) findViewById(R.id.framelayout_listartistfragment);
-        frameLayoutListTopTrack = (FrameLayout) findViewById(R.id.framelayout_listtoptrackfragment);
         if(frameLayoutListTopTrack == null) {
             twoPanes = false;
         }
-        linearLayoutLostConnection = (LinearLayout) findViewById(R.id.linearlayout_lostconnection);
-        linearLayoutLetsFindArtist = (LinearLayout) findViewById(R.id.linearlayout_letssearch);
         linearLayoutLetsFindArtist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MenuItemCompat.expandActionView(menuItemSearchView);
             }
         });
-        progressBar = (ProgressBar) findViewById(R.id.progressbar);
-
         if (savedInstanceState != null) {
             Artist[] artistArray = (Artist[]) savedInstanceState.getParcelableArray(ARTIST_LIST_BUNDLE_KEY);
             if(artistArray != null) {

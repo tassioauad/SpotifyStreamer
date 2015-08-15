@@ -25,6 +25,8 @@ import br.com.tassioauad.spotifystreamer.model.entity.Artist;
 import br.com.tassioauad.spotifystreamer.view.activity.SearchArtistActivity;
 import br.com.tassioauad.spotifystreamer.view.activity.SearchTopTrackActivity;
 import br.com.tassioauad.spotifystreamer.view.listviewadapter.ArtistListViewAdapter;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class ListArtistFragment extends Fragment {
 
@@ -32,8 +34,8 @@ public class ListArtistFragment extends Fragment {
 
     private List<Artist> artistList = new ArrayList<>();
     private ListArtistListener listArtistListener;
-    private LinearLayout linearLayoutNotFound;
-    private ListView listViewArtist;
+    @Bind(R.id.linearlayout_notfound) LinearLayout linearLayoutNotFound;
+    @Bind(R.id.listview_artist) ListView listViewArtist;
 
     @Override
     public void onAttach(Activity activity) {
@@ -54,9 +56,7 @@ public class ListArtistFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_listartistfragment, container, false);
-
-        linearLayoutNotFound = (LinearLayout) view.findViewById(R.id.linearlayout_notfound);
-        listViewArtist = (ListView) view.findViewById(R.id.listview_artist);
+        ButterKnife.bind(this, view);
 
         Artist[] artistArray = null;
         if (savedInstanceState != null) {

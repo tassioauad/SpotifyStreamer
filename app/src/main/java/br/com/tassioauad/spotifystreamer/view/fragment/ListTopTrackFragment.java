@@ -25,6 +25,8 @@ import br.com.tassioauad.spotifystreamer.presenter.SearchTopTrackPresenter;
 import br.com.tassioauad.spotifystreamer.utils.dagger.SearchTopTrackModule;
 import br.com.tassioauad.spotifystreamer.view.SearchTopTrackView;
 import br.com.tassioauad.spotifystreamer.view.listviewadapter.TrackListViewAdapter;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class ListTopTrackFragment extends Fragment implements SearchTopTrackView {
 
@@ -35,10 +37,10 @@ public class ListTopTrackFragment extends Fragment implements SearchTopTrackView
     SearchTopTrackPresenter presenter;
     private List<Track> trackList = new ArrayList<>();
 
-    private LinearLayout linearLayoutLostConnection;
-    private LinearLayout linearLayoutNotFound;
-    private ListView listViewTrack;
-    private ProgressBar progressBar;
+    @Bind(R.id.linearlayout_lostconnection) LinearLayout linearLayoutLostConnection;
+    @Bind(R.id.linearlayout_notfound) LinearLayout linearLayoutNotFound;
+    @Bind(R.id.listview_track) ListView listViewTrack;
+    @Bind(R.id.progressbar) ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,11 +53,7 @@ public class ListTopTrackFragment extends Fragment implements SearchTopTrackView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_searchtoptrack, container, false);
-
-        linearLayoutLostConnection = (LinearLayout) view.findViewById(R.id.linearlayout_lostconnection);
-        linearLayoutNotFound = (LinearLayout) view.findViewById(R.id.linearlayout_notfound);
-        listViewTrack = (ListView) view.findViewById(R.id.listview_track);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
+        ButterKnife.bind(this, view);
 
         if (savedInstanceState != null) {
             Track[] trackArray = (Track[]) savedInstanceState.getParcelableArray(TRACK_LIST_BUNDLE_KEY);

@@ -11,17 +11,20 @@ import android.view.MenuItem;
 import br.com.tassioauad.spotifystreamer.R;
 import br.com.tassioauad.spotifystreamer.model.entity.Artist;
 import br.com.tassioauad.spotifystreamer.view.fragment.ListTopTrackFragment;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class SearchTopTrackActivity extends AppCompatActivity {
 
     private static final String ARTIST_BUNDLE_KEY = "trackbundlekey";
 
+    @Bind(R.id.toolbar) Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_searchtoptrack);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
