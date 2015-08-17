@@ -42,6 +42,7 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
 
     @Bind(R.id.linearlayout_lostconnection) LinearLayout linearLayoutLostConnection;
     @Bind(R.id.linearlayout_letssearch) LinearLayout linearLayoutLetsFindArtist;
+    @Bind(R.id.linearlayout_fragments) LinearLayout linearLayoutFragments;
     @Bind(R.id.progressbar) ProgressBar progressBar;
     @Bind(R.id.framelayout_listartistfragment) FrameLayout frameLayoutListArtist;
     @Nullable @Bind(R.id.framelayout_listtoptrackfragment) FrameLayout frameLayoutListTopTrack;
@@ -114,9 +115,8 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
         linearLayoutLostConnection.setVisibility(View.GONE);
         linearLayoutLetsFindArtist.setVisibility(View.GONE);
         if(twoPanes) {
-            frameLayoutListTopTrack.setVisibility(View.GONE);
+            linearLayoutFragments.setVisibility(View.VISIBLE);
         }
-        frameLayoutListArtist.setVisibility(View.VISIBLE);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.framelayout_listartistfragment, ListArtistFragment.newInstance(this, artistList))
@@ -128,9 +128,8 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
         linearLayoutLostConnection.setVisibility(View.GONE);
         linearLayoutLetsFindArtist.setVisibility(View.GONE);
         if(twoPanes) {
-            frameLayoutListTopTrack.setVisibility(View.GONE);
+            linearLayoutFragments.setVisibility(View.VISIBLE);
         }
-        frameLayoutListArtist.setVisibility(View.VISIBLE);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.framelayout_listartistfragment, ListArtistFragment.newInstance(this))
@@ -142,9 +141,8 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
         linearLayoutLostConnection.setVisibility(View.VISIBLE);
         linearLayoutLetsFindArtist.setVisibility(View.GONE);
         if(twoPanes) {
-            frameLayoutListTopTrack.setVisibility(View.GONE);
+            linearLayoutFragments.setVisibility(View.GONE);
         }
-        frameLayoutListArtist.setVisibility(View.GONE);
     }
 
     @Override

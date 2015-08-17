@@ -19,24 +19,26 @@
         android:visibility="gone" />
 
     <LinearLayout
+        android:id="@+id/linearlayout_fragments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:weightSum="1"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:weightSum="1">
 
         <FrameLayout
             android:id="@+id/framelayout_listartistfragment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"
-            android:elevation="8dp"/>
+            android:layout_weight="0.5"
+            android:elevation="8dp" />
 
         <FrameLayout
             android:id="@+id/framelayout_listtoptrackfragment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.4" />
+            android:layout_weight="0.5"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
