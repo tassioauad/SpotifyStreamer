@@ -22,6 +22,7 @@ import javax.inject.Inject;
 import br.com.tassioauad.spotifystreamer.R;
 import br.com.tassioauad.spotifystreamer.SpotifyStreamerApplication;
 import br.com.tassioauad.spotifystreamer.model.entity.Artist;
+import br.com.tassioauad.spotifystreamer.model.entity.Track;
 import br.com.tassioauad.spotifystreamer.presenter.SearchArtistPresenter;
 import br.com.tassioauad.spotifystreamer.utils.dagger.SearchArtistModule;
 import br.com.tassioauad.spotifystreamer.view.SearchArtistView;
@@ -30,7 +31,7 @@ import br.com.tassioauad.spotifystreamer.view.fragment.ListTopTrackFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SearchArtistActivity extends AppCompatActivity implements SearchArtistView, ListArtistFragment.ListArtistListener {
+public class SearchArtistActivity extends AppCompatActivity implements SearchArtistView, ListArtistFragment.ListArtistListener, ListTopTrackFragment.ListTopTrackListener {
 
     private final String ARTIST_LIST_BUNDLE_KEY = "artistlistbundlekey";
 
@@ -167,5 +168,10 @@ public class SearchArtistActivity extends AppCompatActivity implements SearchArt
         } else {
             startActivity(SearchTopTrackActivity.newIntent(this, artist));
         }
+    }
+
+    @Override
+    public void onTrackSelected(Track track) {
+
     }
 }

@@ -10,11 +10,12 @@ import android.view.MenuItem;
 
 import br.com.tassioauad.spotifystreamer.R;
 import br.com.tassioauad.spotifystreamer.model.entity.Artist;
+import br.com.tassioauad.spotifystreamer.model.entity.Track;
 import br.com.tassioauad.spotifystreamer.view.fragment.ListTopTrackFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SearchTopTrackActivity extends AppCompatActivity {
+public class SearchTopTrackActivity extends AppCompatActivity implements ListTopTrackFragment.ListTopTrackListener{
 
     private static final String ARTIST_BUNDLE_KEY = "trackbundlekey";
 
@@ -54,5 +55,10 @@ public class SearchTopTrackActivity extends AppCompatActivity {
         intent.putExtra(ARTIST_BUNDLE_KEY, artist);
 
         return intent;
+    }
+
+    @Override
+    public void onTrackSelected(Track track) {
+
     }
 }

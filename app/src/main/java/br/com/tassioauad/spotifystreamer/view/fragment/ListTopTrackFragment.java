@@ -1,11 +1,13 @@
 package br.com.tassioauad.spotifystreamer.view.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -41,6 +43,17 @@ public class ListTopTrackFragment extends Fragment implements SearchTopTrackView
     @Bind(R.id.linearlayout_notfound) LinearLayout linearLayoutNotFound;
     @Bind(R.id.listview_track) ListView listViewTrack;
     @Bind(R.id.progressbar) ProgressBar progressBar;
+    private ListTopTrackListener listTopTrackListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if(activity instanceof ListTopTrackListener) {
+            listTopTrackListener = (ListTopTrackListener) activity;
+        } else {
+            throw new RuntimeException("Activity must implement ListTopTrackListener");
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,6 +102,12 @@ public class ListTopTrackFragment extends Fragment implements SearchTopTrackView
         linearLayoutLostConnection.setVisibility(View.GONE);
         listViewTrack.setVisibility(View.VISIBLE);
         listViewTrack.setAdapter(new TrackListViewAdapter(getActivity(), trackList));
+        listViewTrack.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listTopTrackListener.onTrackSelected((Track) parent.getAdapter().getItem(position));
+            }
+        });
     }
 
     @Override
@@ -126,4 +145,9 @@ public class ListTopTrackFragment extends Fragment implements SearchTopTrackView
 
         return listTopTrackFragment;
     }
+
+    public interface ListTopTrackListener {
+        void onTrackSelected(Track track);
+    }
+
 }
