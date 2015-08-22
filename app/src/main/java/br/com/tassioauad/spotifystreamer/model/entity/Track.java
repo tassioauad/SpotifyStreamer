@@ -17,6 +17,8 @@ public class Track implements Parcelable {
 
     public List<Artist> artistList = new ArrayList<>();
 
+    private String previewUrl;
+
     public Track() {
     }
 
@@ -27,7 +29,7 @@ public class Track implements Parcelable {
         for (kaaes.spotify.webapi.android.models.ArtistSimple artistSimple : track.artists) {
             artistList.add(new Artist(artistSimple));
         }
-
+        previewUrl = track.preview_url;
     }
 
     public String getId() {
@@ -62,6 +64,13 @@ public class Track implements Parcelable {
         this.artistList = artistList;
     }
 
+    public String getPreviewUrl() {
+        return previewUrl;
+    }
+
+    public void setPreviewUrl(String previewUrl) {
+        this.previewUrl = previewUrl;
+    }
 
     @Override
     public int describeContents() {
@@ -72,18 +81,20 @@ public class Track implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
         dest.writeString(this.name);
-        dest.writeParcelable(this.album, flags);
+        dest.writeParcelable(this.album, 0);
         dest.writeTypedList(artistList);
+        dest.writeString(this.previewUrl);
     }
 
-    private Track(Parcel in) {
+    protected Track(Parcel in) {
         this.id = in.readString();
         this.name = in.readString();
         this.album = in.readParcelable(Album.class.getClassLoader());
-        in.readTypedList(artistList, Artist.CREATOR);
+        this.artistList = in.createTypedArrayList(Artist.CREATOR);
+        this.previewUrl = in.readString();
     }
 
-    public static final Parcelable.Creator<Track> CREATOR = new Parcelable.Creator<Track>() {
+    public static final Creator<Track> CREATOR = new Creator<Track>() {
         public Track createFromParcel(Parcel source) {
             return new Track(source);
         }

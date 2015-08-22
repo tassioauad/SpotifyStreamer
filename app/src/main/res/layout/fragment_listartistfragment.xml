@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/ActivityLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/app_bar" />
 
     <ProgressBar
         android:id="@+id/progressbar"
@@ -19,11 +14,13 @@
         android:visibility="gone"/>
 
     <ListView
-        android:id="@+id/listview_track"
+        android:id="@+id/listview_artist"
+        style="@style/ListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="@style/ListView"
-        android:visibility="visible"/>
+        android:choiceMode="singleChoice"
+        android:listSelector="@drawable/listviewselector"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/linearlayout_notfound"
@@ -36,14 +33,14 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_search_large"/>
+            android:src="@drawable/icon_search_large" />
 
         <TextView
+            style="@style/TextViewBigWarn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            style="@style/TextViewBigWarn"
-            android:text="@string/searchtoptrack_anytrackwasfound"/>
+            android:text="@string/artist_anyartistwasfound" />
 
     </LinearLayout>
 
@@ -65,7 +62,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             style="@style/TextViewBigWarn"
-            android:text="@string/searchtoptrack_theconnectionwaslost"/>
+            android:text="@string/artist_theconnectionwaslost"/>
 
     </LinearLayout>
 

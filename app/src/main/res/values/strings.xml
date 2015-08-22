@@ -1,12 +1,21 @@
 <resources>
     <string name="app_name">Spotify Streamer</string>
     <string name="artist_search_hint">Search Artist</string>
-    <string name="searchartist_anyartistwasfound">Any artist was found :\'(</string>
-    <string name="searchartist_toast_anyartistwasfound">Any artist was found. Please, refine your search</string>
-    <string name="searchtoptrack_anytrackwasfound">Any track was found :\'(</string>
-    <string name="searchtoptrack_toast_anytrackwasfound">Any track was found. Please, refine your search</string>
-    <string name="searchartist_theconnectionwaslost">The connection was lost :\'(</string>
-    <string name="searchtoptrack_theconnectionwaslost">The connection was lost :\'(</string>
-    <string name="searchtoptrack_title">Top 10 Tracks</string>
-    <string name="searchartist_letsfindfavoriteartist">Let\'s find your favorite artist!\nClick here!</string>
+    <string name="artist_anyartistwasfound">Any artist was found :\'(</string>
+    <string name="artist_toast_anyartistwasfound">Any artist was found. Please, refine your search</string>
+    <string name="toptrack_anytrackwasfound">Any track was found :\'(</string>
+    <string name="toptrack_toast_anytrackwasfound">Any track was found. Please, refine your search</string>
+    <string name="artist_theconnectionwaslost">The connection was lost :\'(</string>
+    <string name="toptrack_theconnectionwaslost">The connection was lost :\'(</string>
+    <string name="toptrack_title">Top 10 Tracks</string>
+    <string name="artist_letsfindfavoriteartist">Let\'s find your favorite artist!\nClick here!</string>
+    <string name="trackfragment_previous">Previous</string>
+    <string name="trackfragment_playpause">Play/Pause</string>
+    <string name="trackfragment_next">Next</string>
+    <string name="menutrack_share">Share</string>
+    <string name="playerfragment_previous">Previous</string>
+    <string name="playerfragment_pause">Pause</string>
+    <string name="playerfragment_play">Play</string>
+    <string name="playerfragment_next">Next</string>
+    <string name="playerfragmemt_sharetext">I\'m listening \'%1$s\' by %2$s. Listen it too: %3$s</string>
 </resources>

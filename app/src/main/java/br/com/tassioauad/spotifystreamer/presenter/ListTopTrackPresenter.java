@@ -8,14 +8,14 @@ import br.com.tassioauad.spotifystreamer.model.api.exception.BadRequestException
 import br.com.tassioauad.spotifystreamer.model.api.exception.NotFoundException;
 import br.com.tassioauad.spotifystreamer.model.entity.Artist;
 import br.com.tassioauad.spotifystreamer.model.entity.Track;
-import br.com.tassioauad.spotifystreamer.view.SearchTopTrackView;
+import br.com.tassioauad.spotifystreamer.view.ListTopTrackView;
 
-public class SearchTopTrackPresenter {
+public class ListTopTrackPresenter {
 
-    private SearchTopTrackView view;
+    private ListTopTrackView view;
     private TrackApi trackApi;
 
-    public SearchTopTrackPresenter(SearchTopTrackView view, TrackApi trackApi) {
+    public ListTopTrackPresenter(ListTopTrackView view, TrackApi trackApi) {
         this.view = view;
         this.trackApi = trackApi;
     }

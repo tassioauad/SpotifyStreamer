@@ -4,9 +4,7 @@ import java.util.List;
 
 import br.com.tassioauad.spotifystreamer.model.entity.Artist;
 
-
-public interface SearchArtistView {
-
+public interface ListArtistView {
     /**
      * Show artists which were found in search
      * @param artists

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ActivityLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/app_bar" />
+
+    <LinearLayout
+        android:id="@+id/linearlayout_fragments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="16dp"
+        android:baselineAligned="false"
+        android:divider="@color/gray200"
+        android:orientation="horizontal"
+        android:showDividers="middle"
+        android:visibility="gone"
+        android:weightSum="2">
+
+        <FrameLayout
+            android:id="@+id/framelayout_listartistfragment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/deeporange50"
+            android:elevation="30dp" />
+
+        <FrameLayout
+            android:id="@+id/framelayout_listtoptrackfragment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearlayout_letssearch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/up_arrow" />
+
+        <TextView
+            style="@style/TextViewBigWarn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/artist_letsfindfavoriteartist" />
+
+    </LinearLayout>
+
+</LinearLayout>

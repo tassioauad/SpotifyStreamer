@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -66,11 +66,9 @@ public class TrackListViewAdapter extends BaseAdapter {
         viewHolder.textViewTrackName.setText(track.getName());
         viewHolder.textViewAlbumName.setText(track.getAlbum().getName());
         String imageUrl = track.getAlbum().getSmallImageUrl() == null ? track.getAlbum().getImageUrl() : track.getAlbum().getSmallImageUrl();
-        Glide.with(context)
+        Picasso.with(context)
                 .load(imageUrl)
-                .centerCrop()
                 .placeholder(R.drawable.icon_oldmic)
-                .crossFade()
                 .into(viewHolder.imageViewAlbumPhoto);
         StringBuilder stringBuilder = new StringBuilder();
         for (Artist artist : track.getArtistList()) {

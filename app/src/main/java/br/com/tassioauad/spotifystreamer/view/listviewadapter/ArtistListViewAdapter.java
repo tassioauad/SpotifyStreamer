@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -63,11 +63,9 @@ public class ArtistListViewAdapter extends BaseAdapter {
 
         viewHolder.textViewName.setText(artist.getName());
         String imageUrl = artist.getSmallImageUrl() == null ? artist.getImageUrl() : artist.getSmallImageUrl();
-        Glide.with(context)
+        Picasso.with(context)
                 .load(artist.getSmallImageUrl())
-                .centerCrop()
                 .placeholder(R.drawable.icon_oldmic)
-                .crossFade()
                 .into(viewHolder.imageViewPhoto);
 
         return convertView;

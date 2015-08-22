@@ -10,92 +10,96 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.tassioauad.spotifystreamer.model.api.ApiResultListener;
-import br.com.tassioauad.spotifystreamer.model.api.TrackApi;
+import br.com.tassioauad.spotifystreamer.model.api.ArtistApi;
 import br.com.tassioauad.spotifystreamer.model.api.exception.BadRequestException;
 import br.com.tassioauad.spotifystreamer.model.api.exception.NotFoundException;
 import br.com.tassioauad.spotifystreamer.model.entity.Artist;
-import br.com.tassioauad.spotifystreamer.model.entity.Track;
-import br.com.tassioauad.spotifystreamer.view.SearchTopTrackView;
+import br.com.tassioauad.spotifystreamer.view.ArtistView;
+import br.com.tassioauad.spotifystreamer.view.ListArtistView;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyListOf;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class SearchTopTrackPresenterTest extends AndroidTestCase {
+public class ListArtistPresenterTest extends AndroidTestCase {
 
-    SearchTopTrackPresenter presenter;
-    SearchTopTrackView view;
-    TrackApi trackApi;
+    ListArtistView view;
+    ArtistApi artistApi;
+    ListArtistPresenter presenter;
     ArgumentCaptor<ApiResultListener> apiResultListenerArgumentCaptor;
 
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
-        view = mock(SearchTopTrackView.class);
-        trackApi = mock(TrackApi.class);
+        view = mock(ListArtistView.class);
+        artistApi = mock(ArtistApi.class);
         apiResultListenerArgumentCaptor = ArgumentCaptor.forClass(ApiResultListener.class);
     }
 
-    public void testSearchByArtist_ValidArtist() {
+    public void testInit()  {
+
+    }
+
+    public void testSearchByName_ValidName() {
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
                 doAnswer(new Answer() {
                     @Override
                     public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-                        List<Track> trackList = new ArrayList<>();
-                        trackList.add(new Track());
-                        apiResultListenerArgumentCaptor.getValue().onResult(trackList);
+                        List<Artist> artistList = new ArrayList<>();
+                        artistList.add(new Artist());
+                        apiResultListenerArgumentCaptor.getValue().onResult(artistList);
                         return null;
                     }
-                }).when(trackApi).findTopTenTrack(any(Artist.class));
+                }).when(artistApi).findByName(anyString());
                 return null;
             }
-        }).when(trackApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
-        presenter = new SearchTopTrackPresenter(view, trackApi);
+        }).when(artistApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
+        presenter = new ListArtistPresenter(view, artistApi);
 
-        presenter.searchByArtist(new Artist());
+        presenter.searchByName("Dave Matthews Band");
 
-        verify(trackApi, times(1)).findTopTenTrack(any(Artist.class));
-        verify(view, times(1)).showTracks(anyListOf(Track.class));
-        verify(view, never()).anyTrackFounded();
+        verify(artistApi, times(1)).findByName(anyString());
+        verify(view, times(1)).showArtists(anyListOf(Artist.class));
+        verify(view, never()).anyArtistFounded();
         verify(view, never()).lostConnection();
         verify(view, times(1)).showLoadingWarn();
         verify(view, times(1)).hideLoadingWarn();
     }
 
-    public void testSearchByArtist_InvalidArtist() {
+    public void testSearchByName_InvalidName() {
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
                 doAnswer(new Answer() {
                     @Override
                     public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-                        List<Track> trackList = new ArrayList<>();
-                        apiResultListenerArgumentCaptor.getValue().onResult(trackList);
+                        List<Artist> artistList = new ArrayList<>();
+                        apiResultListenerArgumentCaptor.getValue().onResult(artistList);
                         return null;
                     }
-                }).when(trackApi).findTopTenTrack(any(Artist.class));
+                }).when(artistApi).findByName(anyString());
                 return null;
             }
-        }).when(trackApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
-        presenter = new SearchTopTrackPresenter(view, trackApi);
+        }).when(artistApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
+        presenter = new ListArtistPresenter(view, artistApi);
 
-        presenter.searchByArtist(new Artist());
+        presenter.searchByName("##.*");
 
-        verify(trackApi, times(1)).findTopTenTrack(any(Artist.class));
-        verify(view, never()).showTracks(anyListOf(Track.class));
-        verify(view, times(1)).anyTrackFounded();
+        verify(artistApi, times(1)).findByName(anyString());
+        verify(view, never()).showArtists(anyListOf(Artist.class));
+        verify(view, times(1)).anyArtistFounded();
         verify(view, never()).lostConnection();
         verify(view, times(1)).showLoadingWarn();
         verify(view, times(1)).hideLoadingWarn();
     }
 
-    public void testSearchByArtist_BadRequest() {
+    public void testSearchByName_BadRequest() {
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
@@ -105,23 +109,23 @@ public class SearchTopTrackPresenterTest extends AndroidTestCase {
                         apiResultListenerArgumentCaptor.getValue().onException(new BadRequestException());
                         return null;
                     }
-                }).when(trackApi).findTopTenTrack(any(Artist.class));
+                }).when(artistApi).findByName(anyString());
                 return null;
             }
-        }).when(trackApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
-        presenter = new SearchTopTrackPresenter(view, trackApi);
+        }).when(artistApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
+        presenter = new ListArtistPresenter(view, artistApi);
 
-        presenter.searchByArtist(new Artist());
+        presenter.searchByName("##.*");
 
-        verify(trackApi, times(1)).findTopTenTrack(any(Artist.class));
-        verify(view, never()).showTracks(anyListOf(Track.class));
-        verify(view, times(1)).anyTrackFounded();
+        verify(artistApi, times(1)).findByName(anyString());
+        verify(view, never()).showArtists(anyListOf(Artist.class));
+        verify(view, times(1)).anyArtistFounded();
         verify(view, never()).lostConnection();
         verify(view, times(1)).showLoadingWarn();
         verify(view, times(1)).hideLoadingWarn();
     }
 
-    public void testSearchByArtist_NotFound() {
+    public void testSearchByName_NotFound() {
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
@@ -131,23 +135,23 @@ public class SearchTopTrackPresenterTest extends AndroidTestCase {
                         apiResultListenerArgumentCaptor.getValue().onException(new NotFoundException());
                         return null;
                     }
-                }).when(trackApi).findTopTenTrack(any(Artist.class));
+                }).when(artistApi).findByName(anyString());
                 return null;
             }
-        }).when(trackApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
-        presenter = new SearchTopTrackPresenter(view, trackApi);
+        }).when(artistApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
+        presenter = new ListArtistPresenter(view, artistApi);
 
-        presenter.searchByArtist(new Artist());
+        presenter.searchByName("##.*");
 
-        verify(trackApi, times(1)).findTopTenTrack(any(Artist.class));
-        verify(view, never()).showTracks(anyListOf(Track.class));
-        verify(view, never()).anyTrackFounded();
+        verify(artistApi, times(1)).findByName(anyString());
+        verify(view, never()).showArtists(anyListOf(Artist.class));
+        verify(view, never()).anyArtistFounded();
         verify(view, times(1)).lostConnection();
         verify(view, times(1)).showLoadingWarn();
         verify(view, times(1)).hideLoadingWarn();
     }
 
-    public void testSearchByArtist_OtherException() {
+    public void testSearchByName_OtherException() {
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
@@ -157,28 +161,27 @@ public class SearchTopTrackPresenterTest extends AndroidTestCase {
                         apiResultListenerArgumentCaptor.getValue().onException(new Exception());
                         return null;
                     }
-                }).when(trackApi).findTopTenTrack(any(Artist.class));
+                }).when(artistApi).findByName(anyString());
                 return null;
             }
-        }).when(trackApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
-        presenter = new SearchTopTrackPresenter(view, trackApi);
+        }).when(artistApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
+        presenter = new ListArtistPresenter(view, artistApi);
 
-        presenter.searchByArtist(new Artist());
+        presenter.searchByName("##.*");
 
-        verify(trackApi, times(1)).findTopTenTrack(any(Artist.class));
-        verify(view, never()).showTracks(anyListOf(Track.class));
-        verify(view, times(1)).anyTrackFounded();
+        verify(artistApi, times(1)).findByName(anyString());
+        verify(view, never()).showArtists(anyListOf(Artist.class));
+        verify(view, times(1)).anyArtistFounded();
         verify(view, never()).lostConnection();
         verify(view, times(1)).showLoadingWarn();
         verify(view, times(1)).hideLoadingWarn();
     }
 
     public void testFinish() {
-        presenter = new SearchTopTrackPresenter(view, trackApi);
+        presenter = new ListArtistPresenter(view, artistApi);
 
         presenter.finish();
 
-        verify(trackApi, times(1)).stopAnyExecution();
+        verify(artistApi, times(1)).stopAnyExecution();
     }
-
 }

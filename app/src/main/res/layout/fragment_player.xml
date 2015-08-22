@@ -1,0 +1,114 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:gravity="center_horizontal"
+    android:padding="16dp"
+    android:minWidth="500dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageview_albumimage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/textview_trackname"
+        style="@style/TextViewSecondTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/textview_albumname"
+        style="@style/TextViewCommon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/textview_artistname"
+        style="@style/TextViewCommon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_gravity="center"
+        android:visibility="visible"/>
+
+    <SeekBar
+        android:id="@+id/seekbar_trackprogress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-8dp">
+
+        <TextView
+            android:id="@+id/textview_trackactualtime"
+            style="@style/TextViewCommon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textview_tracktime"
+            style="@style/TextViewCommon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/imagebutton_trackprevious"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/trackfragment_previous"
+            android:enabled="false"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_margin="5dp"
+            android:background="@color/purple800"
+            android:src="@android:drawable/ic_media_previous" />
+
+        <ImageButton
+            android:id="@+id/imagebutton_trackplay"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/trackfragment_playpause"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_margin="5dp"
+            android:background="@color/purple800"
+            android:src="@android:drawable/ic_media_play" />
+
+        <ImageButton
+            android:id="@+id/imagebutton_tracknext"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/trackfragment_next"
+            android:enabled="false"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_margin="5dp"
+            android:background="@color/purple800"
+            android:src="@android:drawable/ic_media_next" />
+
+    </LinearLayout>
+
+</LinearLayout>
