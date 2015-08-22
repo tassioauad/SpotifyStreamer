@@ -15,7 +15,7 @@ import br.com.tassioauad.spotifystreamer.model.api.exception.BadRequestException
 import br.com.tassioauad.spotifystreamer.model.api.exception.NotFoundException;
 import br.com.tassioauad.spotifystreamer.model.entity.Artist;
 import br.com.tassioauad.spotifystreamer.model.entity.Track;
-import br.com.tassioauad.spotifystreamer.view.SearchTopTrackView;
+import br.com.tassioauad.spotifystreamer.view.ListTopTrackView;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyListOf;
@@ -25,17 +25,17 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class SearchTopTrackPresenterTest extends AndroidTestCase {
+public class ListTopTrackPresenterTest extends AndroidTestCase {
 
-    SearchTopTrackPresenter presenter;
-    SearchTopTrackView view;
+    ListTopTrackPresenter presenter;
+    ListTopTrackView view;
     TrackApi trackApi;
     ArgumentCaptor<ApiResultListener> apiResultListenerArgumentCaptor;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        view = mock(SearchTopTrackView.class);
+        view = mock(ListTopTrackView.class);
         trackApi = mock(TrackApi.class);
         apiResultListenerArgumentCaptor = ArgumentCaptor.forClass(ApiResultListener.class);
     }
@@ -56,7 +56,7 @@ public class SearchTopTrackPresenterTest extends AndroidTestCase {
                 return null;
             }
         }).when(trackApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
-        presenter = new SearchTopTrackPresenter(view, trackApi);
+        presenter = new ListTopTrackPresenter(view, trackApi);
 
         presenter.searchByArtist(new Artist());
 
@@ -83,7 +83,7 @@ public class SearchTopTrackPresenterTest extends AndroidTestCase {
                 return null;
             }
         }).when(trackApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
-        presenter = new SearchTopTrackPresenter(view, trackApi);
+        presenter = new ListTopTrackPresenter(view, trackApi);
 
         presenter.searchByArtist(new Artist());
 
@@ -109,7 +109,7 @@ public class SearchTopTrackPresenterTest extends AndroidTestCase {
                 return null;
             }
         }).when(trackApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
-        presenter = new SearchTopTrackPresenter(view, trackApi);
+        presenter = new ListTopTrackPresenter(view, trackApi);
 
         presenter.searchByArtist(new Artist());
 
@@ -135,7 +135,7 @@ public class SearchTopTrackPresenterTest extends AndroidTestCase {
                 return null;
             }
         }).when(trackApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
-        presenter = new SearchTopTrackPresenter(view, trackApi);
+        presenter = new ListTopTrackPresenter(view, trackApi);
 
         presenter.searchByArtist(new Artist());
 
@@ -161,7 +161,7 @@ public class SearchTopTrackPresenterTest extends AndroidTestCase {
                 return null;
             }
         }).when(trackApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
-        presenter = new SearchTopTrackPresenter(view, trackApi);
+        presenter = new ListTopTrackPresenter(view, trackApi);
 
         presenter.searchByArtist(new Artist());
 
@@ -174,7 +174,7 @@ public class SearchTopTrackPresenterTest extends AndroidTestCase {
     }
 
     public void testFinish() {
-        presenter = new SearchTopTrackPresenter(view, trackApi);
+        presenter = new ListTopTrackPresenter(view, trackApi);
 
         presenter.finish();
 

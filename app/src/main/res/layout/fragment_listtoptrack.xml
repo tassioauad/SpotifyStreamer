@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             style="@style/TextViewBigWarn"
-            android:text="@string/searchtoptrack_anytrackwasfound"/>
+            android:text="@string/toptrack_anytrackwasfound"/>
 
     </LinearLayout>
 
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             style="@style/TextViewBigWarn"
-            android:text="@string/searchtoptrack_theconnectionwaslost"/>
+            android:text="@string/toptrack_theconnectionwaslost"/>
 
     </LinearLayout>
 

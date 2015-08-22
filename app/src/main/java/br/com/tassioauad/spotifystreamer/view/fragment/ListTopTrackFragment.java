@@ -23,20 +23,20 @@ import br.com.tassioauad.spotifystreamer.R;
 import br.com.tassioauad.spotifystreamer.SpotifyStreamerApplication;
 import br.com.tassioauad.spotifystreamer.model.entity.Artist;
 import br.com.tassioauad.spotifystreamer.model.entity.Track;
-import br.com.tassioauad.spotifystreamer.presenter.SearchTopTrackPresenter;
-import br.com.tassioauad.spotifystreamer.utils.dagger.SearchTopTrackModule;
-import br.com.tassioauad.spotifystreamer.view.SearchTopTrackView;
+import br.com.tassioauad.spotifystreamer.presenter.ListTopTrackPresenter;
+import br.com.tassioauad.spotifystreamer.utils.dagger.ListTopTrackModule;
+import br.com.tassioauad.spotifystreamer.view.ListTopTrackView;
 import br.com.tassioauad.spotifystreamer.view.listviewadapter.TrackListViewAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ListTopTrackFragment extends Fragment implements SearchTopTrackView {
+public class ListTopTrackFragment extends Fragment implements ListTopTrackView {
 
     private final String TRACK_LIST_BUNDLE_KEY = "tracklistbundlekey";
     private static final String ARTIST_BUNDLE_KEY = "trackbundlekey";
 
     @Inject
-    SearchTopTrackPresenter presenter;
+    ListTopTrackPresenter presenter;
     private List<Track> trackList = new ArrayList<>();
 
     @Bind(R.id.linearlayout_lostconnection) LinearLayout linearLayoutLostConnection;
@@ -59,13 +59,13 @@ public class ListTopTrackFragment extends Fragment implements SearchTopTrackView
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((SpotifyStreamerApplication) getActivity().getApplication())
-                .getObjectGraph().plus(new SearchTopTrackModule(this)).inject(this);
+                .getObjectGraph().plus(new ListTopTrackModule(this)).inject(this);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_searchtoptrack, container, false);
+        View view = inflater.inflate(R.layout.fragment_listtoptrack, container, false);
         ButterKnife.bind(this, view);
 
         if (savedInstanceState != null) {
@@ -96,7 +96,7 @@ public class ListTopTrackFragment extends Fragment implements SearchTopTrackView
     }
 
     @Override
-    public void showTracks(List<Track> trackList) {
+    public void showTracks(final List<Track> trackList) {
         this.trackList = trackList;
         linearLayoutNotFound.setVisibility(View.GONE);
         linearLayoutLostConnection.setVisibility(View.GONE);
@@ -105,7 +105,7 @@ public class ListTopTrackFragment extends Fragment implements SearchTopTrackView
         listViewTrack.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                listTopTrackListener.onTrackSelected((Track) parent.getAdapter().getItem(position));
+                listTopTrackListener.onTrackSelected(position, trackList);
             }
         });
     }
@@ -115,7 +115,7 @@ public class ListTopTrackFragment extends Fragment implements SearchTopTrackView
         linearLayoutNotFound.setVisibility(View.VISIBLE);
         linearLayoutLostConnection.setVisibility(View.GONE);
         listViewTrack.setVisibility(View.GONE);
-        Toast toast = Toast.makeText(getActivity(), getString(R.string.searchtoptrack_toast_anytrackwasfound), Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getActivity(), getString(R.string.toptrack_toast_anytrackwasfound), Toast.LENGTH_SHORT);
         toast.getView().setBackgroundColor(getResources().getColor(R.color.green));
         toast.show();
     }
@@ -147,7 +147,7 @@ public class ListTopTrackFragment extends Fragment implements SearchTopTrackView
     }
 
     public interface ListTopTrackListener {
-        void onTrackSelected(Track track);
+        void onTrackSelected(int position, List<Track> trackList);
     }
 
 }
