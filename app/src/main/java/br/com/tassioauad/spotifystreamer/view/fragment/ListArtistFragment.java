@@ -5,10 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -20,22 +17,30 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import br.com.tassioauad.spotifystreamer.R;
+import br.com.tassioauad.spotifystreamer.SpotifyStreamerApplication;
 import br.com.tassioauad.spotifystreamer.model.entity.Artist;
-import br.com.tassioauad.spotifystreamer.view.activity.SearchArtistActivity;
-import br.com.tassioauad.spotifystreamer.view.activity.SearchTopTrackActivity;
+import br.com.tassioauad.spotifystreamer.presenter.ListArtistPresenter;
+import br.com.tassioauad.spotifystreamer.utils.dagger.ListArtistModule;
+import br.com.tassioauad.spotifystreamer.view.ListArtistView;
 import br.com.tassioauad.spotifystreamer.view.listviewadapter.ArtistListViewAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ListArtistFragment extends Fragment {
+public class ListArtistFragment extends Fragment implements ListArtistView {
 
     private static final String ARTIST_LIST_BUNDLE_KEY = "artistlistbundlekey";
-
+    private static final String ARTIST_NAME_BUNDLE_KEY = "artistnamebundlekey";
+    @Inject
+    ListArtistPresenter presenter;
     private List<Artist> artistList = new ArrayList<>();
     private ListArtistListener listArtistListener;
     @Bind(R.id.linearlayout_notfound) LinearLayout linearLayoutNotFound;
     @Bind(R.id.listview_artist) ListView listViewArtist;
+    @Bind(R.id.linearlayout_lostconnection) LinearLayout linearLayoutLostConnection;
+    @Bind(R.id.progressbar) ProgressBar progressBar;
 
     @Override
     public void onAttach(Activity activity) {
@@ -57,28 +62,19 @@ public class ListArtistFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_listartistfragment, container, false);
         ButterKnife.bind(this, view);
+        ((SpotifyStreamerApplication) getActivity().getApplication()).getObjectGraph().plus(new ListArtistModule(this)).inject(this);
 
-        Artist[] artistArray = null;
         if (savedInstanceState != null) {
-            artistArray = (Artist[]) savedInstanceState.getParcelableArray(ARTIST_LIST_BUNDLE_KEY);
+            Artist[] artistArray = (Artist[]) savedInstanceState.getParcelableArray(ARTIST_LIST_BUNDLE_KEY);
+            if (artistArray == null || artistArray.length == 0) {
+                anyArtistFounded();
+            } else {
+                artistList = Arrays.asList(artistArray);
+                showArtists(artistList);
+            }
         } else if(getArguments() != null) {
-            artistArray = (Artist[]) getArguments().getParcelableArray(ARTIST_LIST_BUNDLE_KEY);
-        }
-
-        if (artistArray == null || artistArray.length == 0) {
-            linearLayoutNotFound.setVisibility(View.VISIBLE);
-            listViewArtist.setVisibility(View.GONE);
-        } else {
-            artistList = Arrays.asList(artistArray);
-            linearLayoutNotFound.setVisibility(View.GONE);
-            listViewArtist.setVisibility(View.VISIBLE);
-            listViewArtist.setAdapter(new ArtistListViewAdapter(getActivity(), artistList));
-            listViewArtist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    listArtistListener.onArtistSelected((Artist) parent.getAdapter().getItem(position));
-                }
-            });
+            String artistName =  getArguments().getString(ARTIST_NAME_BUNDLE_KEY, null);
+            presenter.searchByName(artistName);
         }
 
         return view;
@@ -87,23 +83,56 @@ public class ListArtistFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (artistList != null && artistList.size() > 0) {
-            outState.putParcelableArray(ARTIST_LIST_BUNDLE_KEY,
-                    artistList.toArray(new Artist[artistList.size()]));
+            outState.putParcelableArray(ARTIST_LIST_BUNDLE_KEY, artistList.toArray(new Artist[artistList.size()]));
         }
         super.onSaveInstanceState(outState);
     }
 
-    public static ListArtistFragment newInstance(Context context, List<Artist> artistList) {
+    public static ListArtistFragment newInstance(Context context, String artistName) {
         ListArtistFragment listArtistFragment = new ListArtistFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelableArray(ARTIST_LIST_BUNDLE_KEY, artistList.toArray(new Artist[artistList.size()]));
+        bundle.putString(ARTIST_NAME_BUNDLE_KEY, artistName);
         listArtistFragment.setArguments(bundle);
         return listArtistFragment;
     }
 
-    public static ListArtistFragment newInstance(Context context) {
-        ListArtistFragment listArtistFragment = new ListArtistFragment();
-        return listArtistFragment;
+    @Override
+    public void anyArtistFounded() {
+        linearLayoutLostConnection.setVisibility(View.GONE);
+        listViewArtist.setVisibility(View.GONE);
+        linearLayoutNotFound.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showArtists(List<Artist> artistList) {
+        this.artistList = artistList;
+        linearLayoutLostConnection.setVisibility(View.GONE);
+        listViewArtist.setVisibility(View.VISIBLE);
+        linearLayoutNotFound.setVisibility(View.GONE);
+        listViewArtist.setAdapter(new ArtistListViewAdapter(getActivity(), artistList));
+        listViewArtist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listArtistListener.onArtistSelected((Artist) parent.getAdapter().getItem(position));
+            }
+        });
+    }
+
+    @Override
+    public void showLoadingWarn() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadingWarn() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void lostConnection() {
+        linearLayoutLostConnection.setVisibility(View.VISIBLE);
+        listViewArtist.setVisibility(View.GONE);
+        linearLayoutNotFound.setVisibility(View.GONE);
     }
 
     public interface ListArtistListener {

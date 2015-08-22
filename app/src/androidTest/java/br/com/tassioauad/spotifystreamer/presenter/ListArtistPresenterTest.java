@@ -14,7 +14,8 @@ import br.com.tassioauad.spotifystreamer.model.api.ArtistApi;
 import br.com.tassioauad.spotifystreamer.model.api.exception.BadRequestException;
 import br.com.tassioauad.spotifystreamer.model.api.exception.NotFoundException;
 import br.com.tassioauad.spotifystreamer.model.entity.Artist;
-import br.com.tassioauad.spotifystreamer.view.SearchArtistView;
+import br.com.tassioauad.spotifystreamer.view.ArtistView;
+import br.com.tassioauad.spotifystreamer.view.ListArtistView;
 
 import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Matchers.anyString;
@@ -24,17 +25,17 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class SearchArtistPresenterTest extends AndroidTestCase {
+public class ListArtistPresenterTest extends AndroidTestCase {
 
-    SearchArtistView view;
+    ListArtistView view;
     ArtistApi artistApi;
-    SearchArtistPresenter presenter;
+    ListArtistPresenter presenter;
     ArgumentCaptor<ApiResultListener> apiResultListenerArgumentCaptor;
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        view = mock(SearchArtistView.class);
+        view = mock(ListArtistView.class);
         artistApi = mock(ArtistApi.class);
         apiResultListenerArgumentCaptor = ArgumentCaptor.forClass(ApiResultListener.class);
     }
@@ -59,7 +60,7 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
                 return null;
             }
         }).when(artistApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
-        presenter = new SearchArtistPresenter(view, artistApi);
+        presenter = new ListArtistPresenter(view, artistApi);
 
         presenter.searchByName("Dave Matthews Band");
 
@@ -86,7 +87,7 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
                 return null;
             }
         }).when(artistApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
-        presenter = new SearchArtistPresenter(view, artistApi);
+        presenter = new ListArtistPresenter(view, artistApi);
 
         presenter.searchByName("##.*");
 
@@ -112,7 +113,7 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
                 return null;
             }
         }).when(artistApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
-        presenter = new SearchArtistPresenter(view, artistApi);
+        presenter = new ListArtistPresenter(view, artistApi);
 
         presenter.searchByName("##.*");
 
@@ -138,7 +139,7 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
                 return null;
             }
         }).when(artistApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
-        presenter = new SearchArtistPresenter(view, artistApi);
+        presenter = new ListArtistPresenter(view, artistApi);
 
         presenter.searchByName("##.*");
 
@@ -164,7 +165,7 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
                 return null;
             }
         }).when(artistApi).setApiResultListener(apiResultListenerArgumentCaptor.capture());
-        presenter = new SearchArtistPresenter(view, artistApi);
+        presenter = new ListArtistPresenter(view, artistApi);
 
         presenter.searchByName("##.*");
 
@@ -177,7 +178,7 @@ public class SearchArtistPresenterTest extends AndroidTestCase {
     }
 
     public void testFinish() {
-        presenter = new SearchArtistPresenter(view, artistApi);
+        presenter = new ListArtistPresenter(view, artistApi);
 
         presenter.finish();
 

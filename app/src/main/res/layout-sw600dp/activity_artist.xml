@@ -9,36 +9,32 @@
         android:id="@+id/toolbar"
         layout="@layout/app_bar" />
 
-    <ProgressBar
-        android:id="@+id/progressbar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:visibility="gone" />
-
     <LinearLayout
         android:id="@+id/linearlayout_fragments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginRight="16dp"
+        android:baselineAligned="false"
+        android:divider="@color/gray200"
         android:orientation="horizontal"
+        android:showDividers="middle"
         android:visibility="gone"
-        android:weightSum="1">
+        android:weightSum="2">
 
         <FrameLayout
             android:id="@+id/framelayout_listartistfragment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:elevation="8dp" />
+            android:layout_weight="1"
+            android:background="@color/deeporange50"
+            android:elevation="30dp" />
 
         <FrameLayout
             android:id="@+id/framelayout_listtoptrackfragment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:visibility="gone"/>
+            android:layout_weight="1"
+            android:visibility="visible" />
 
     </LinearLayout>
 
@@ -49,7 +45,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -61,29 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/searchartist_letsfindfavoriteartist" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearlayout_lostconnection"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_plug" />
-
-        <TextView
-            style="@style/TextViewBigWarn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/searchartist_theconnectionwaslost" />
+            android:text="@string/artist_letsfindfavoriteartist" />
 
     </LinearLayout>
 

@@ -5,8 +5,11 @@
     <color name="deeporange700">#e64a19</color>
     <color name="deeporange100">#ffccbc</color>
     <color name="deeporange50">#fbe9e7</color>
+    <color name="deeporange10">#baffedeb</color>
     <color name="white">#ffffff</color>
     <color name="purple500">#9c27b0</color>
+    <color name="purple800_alfa">#2d6A1B9A</color>
+    <color name="purple800">#6A1B9A</color>
     <color name="gray900">#212121</color>
     <color name="gray200">#eeeeee</color>
     <color name="green">#7EBC89</color>

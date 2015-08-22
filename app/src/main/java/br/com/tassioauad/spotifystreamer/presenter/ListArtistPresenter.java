@@ -1,5 +1,6 @@
 package br.com.tassioauad.spotifystreamer.presenter;
 
+
 import java.util.List;
 
 import br.com.tassioauad.spotifystreamer.model.api.ApiResultListener;
@@ -7,14 +8,14 @@ import br.com.tassioauad.spotifystreamer.model.api.ArtistApi;
 import br.com.tassioauad.spotifystreamer.model.api.exception.BadRequestException;
 import br.com.tassioauad.spotifystreamer.model.api.exception.NotFoundException;
 import br.com.tassioauad.spotifystreamer.model.entity.Artist;
-import br.com.tassioauad.spotifystreamer.view.SearchArtistView;
+import br.com.tassioauad.spotifystreamer.view.ListArtistView;
 
-public class SearchArtistPresenter {
+public class ListArtistPresenter {
 
-    private SearchArtistView view;
+    private ListArtistView view;
     private ArtistApi artistApi;
 
-    public SearchArtistPresenter(SearchArtistView view, ArtistApi artistApi) {
+    public ListArtistPresenter(ListArtistView view, ArtistApi artistApi) {
         this.view = view;
         this.artistApi = artistApi;
     }
@@ -52,4 +53,5 @@ public class SearchArtistPresenter {
 
         artistApi.findByName(name);
     }
+
 }
