@@ -28,7 +28,8 @@ public class TopTrackActivity extends AppCompatActivity implements ListTopTrackF
     @Inject
     TopTrackPresenter presenter;
     private static final String ARTIST_BUNDLE_KEY = "trackbundlekey";
-    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -65,11 +65,10 @@ public class ListArtistFragment extends Fragment implements ListArtistView {
         ((SpotifyStreamerApplication) getActivity().getApplication()).getObjectGraph().plus(new ListArtistModule(this)).inject(this);
 
         if (savedInstanceState != null) {
-            Artist[] artistArray = (Artist[]) savedInstanceState.getParcelableArray(ARTIST_LIST_BUNDLE_KEY);
-            if (artistArray == null || artistArray.length == 0) {
+            artistList = savedInstanceState.getParcelableArrayList(ARTIST_LIST_BUNDLE_KEY);
+            if (artistList == null || artistList.size() == 0) {
                 anyArtistFounded();
             } else {
-                artistList = Arrays.asList(artistArray);
                 showArtists(artistList);
             }
         } else if(getArguments() != null) {
@@ -83,7 +82,7 @@ public class ListArtistFragment extends Fragment implements ListArtistView {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (artistList != null && artistList.size() > 0) {
-            outState.putParcelableArray(ARTIST_LIST_BUNDLE_KEY, artistList.toArray(new Artist[artistList.size()]));
+            outState.putParcelableArrayList(ARTIST_LIST_BUNDLE_KEY, new ArrayList<Artist>(artistList));
         }
         super.onSaveInstanceState(outState);
     }

@@ -3,8 +3,6 @@ package br.com.tassioauad.spotifystreamer.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -13,7 +11,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,8 +36,10 @@ public class TrackActivity extends AppCompatActivity implements TrackView, Playe
     FrameLayout frameLayoutPlayer;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    public static final String EXTRA_TRACKS = "extra_tracks";
-    public static final String EXTRA_SELECTED_POSITION = "actual_position";
+    public static final String BUNDLE_KEY_TRACKLIST = "extra_tracks";
+    public static final String BUNDLE_KEY_SELECTEDPOSITION = "actual_position";
+    private ArrayList<Track> trackArrayList;
+    private int actualPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +51,24 @@ public class TrackActivity extends AppCompatActivity implements TrackView, Playe
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ArrayList<Track> trackArrayList = getIntent().getExtras().getParcelableArrayList(EXTRA_TRACKS);
-        int actualPosition = getIntent().getExtras().getInt(EXTRA_SELECTED_POSITION, -1);
-        trackPresenter.init(trackArrayList, actualPosition);
+        if(savedInstanceState != null && savedInstanceState.getParcelableArrayList(BUNDLE_KEY_TRACKLIST) != null) {
+            trackArrayList =  savedInstanceState.getParcelableArrayList(BUNDLE_KEY_TRACKLIST);
+            actualPosition = savedInstanceState.getInt(BUNDLE_KEY_SELECTEDPOSITION, 0);
+        } else {
+            trackArrayList = getIntent().getExtras().getParcelableArrayList(BUNDLE_KEY_TRACKLIST);
+            actualPosition = getIntent().getExtras().getInt(BUNDLE_KEY_SELECTEDPOSITION, -1);
+            trackPresenter.init(trackArrayList, actualPosition);
+        }
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if(trackArrayList != null) {
+            outState.putParcelableArrayList(BUNDLE_KEY_TRACKLIST, new ArrayList<Track>(trackArrayList));
+            outState.putInt(BUNDLE_KEY_SELECTEDPOSITION, actualPosition);
+        }
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -70,8 +83,8 @@ public class TrackActivity extends AppCompatActivity implements TrackView, Playe
 
     public static Intent newInstance(Context con, int position, List<Track> trackList) {
         Intent intent = new Intent(con, TrackActivity.class);
-        intent.putExtra(EXTRA_SELECTED_POSITION, position);
-        intent.putExtra(EXTRA_TRACKS, new ArrayList<Track>(trackList));
+        intent.putExtra(BUNDLE_KEY_SELECTEDPOSITION, position);
+        intent.putExtra(BUNDLE_KEY_TRACKLIST, new ArrayList<Track>(trackList));
 
         return intent;
     }

@@ -14,6 +14,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.NotificationCompat;
@@ -36,6 +37,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -56,19 +58,23 @@ public class PlayerFragment extends DialogFragment implements MediaPlayer.OnPrep
 
     @Inject
     PlayerPresenter playerPresenter;
-    public static final String EXTRA_TRACKS = "extra_tracks";
-    public static final String EXTRA_SELECTED_POSITION = "actual_position";
+    public static final String BUNDLE_KEY_TRACKLIST = "extra_tracks";
+    public static final String BUNDLE_KEY_SELECTEDPOSITION = "actual_position";
+    private static final String BUNDLE_KEY_TIME_ELAPSED = "BUNDLE_KEY_TIME_ELAPSED";
+    private static final String BUNDLE_KEY_FINAL_TIME = "BUNDLE_KEY_FINAL_TIME";
     private static final int TRACK_NOTIFICATION_ID = 501;
-    private static final String ACTION_PREVIOUS = "br.com.tassioauad.spotifystreamer.ACTION_PREVIOUS";
-    private static final String ACTION_PLAY = "br.com.tassioauad.spotifystreamer.ACTION_PLAY";
-    private static final String ACTION_PAUSE = "br.com.tassioauad.spotifystreamer.ACTION_STOP";
-    private static final String ACTION_NEXT = "br.com.tassioauad.spotifystreamer.ACTION_NEXT";
+    private static final String ACTION_PREVIOUS = "ACTION_PREVIOUS";
+    private static final String ACTION_PLAY = "ACTION_PLAY";
+    private static final String ACTION_PAUSE = "ACTION_STOP";
+    private static final String ACTION_NEXT = "ACTION_NEXT";
     private ShareActionProvider shareActionProvider;
     private double timeElapsed = 0;
     private double finalTime = 0;
+    private int actualPosition = -1;
     private MediaPlayer mediaPlayer;
     private Track track;
     private PlayerListener playerListener;
+    private List<Track> trackList;
     private Handler durationHandler = new Handler();
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -76,6 +82,8 @@ public class PlayerFragment extends DialogFragment implements MediaPlayer.OnPrep
             String action = intent.getAction();
             switch (action) {
                 case ACTION_PREVIOUS:
+                    finalTime = 0;
+                    timeElapsed = 0;
                     playerPresenter.loadPrevious();
                     break;
                 case ACTION_PLAY:
@@ -85,6 +93,8 @@ public class PlayerFragment extends DialogFragment implements MediaPlayer.OnPrep
                     playAndPause();
                     break;
                 case ACTION_NEXT:
+                    finalTime = 0;
+                    timeElapsed = 0;
                     playerPresenter.loadNext();
                     break;
             }
@@ -151,6 +161,8 @@ public class PlayerFragment extends DialogFragment implements MediaPlayer.OnPrep
         imageButtonPreviousTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finalTime = 0;
+                timeElapsed = 0;
                 playerPresenter.loadPrevious();
             }
         });
@@ -165,20 +177,40 @@ public class PlayerFragment extends DialogFragment implements MediaPlayer.OnPrep
         imageButtonNextTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finalTime = 0;
+                timeElapsed = 0;
                 playerPresenter.loadNext();
             }
         });
         seekBar.setOnSeekBarChangeListener(this);
 
-        Track[] trackArray = (Track[]) getArguments().getParcelableArray(EXTRA_TRACKS);
-        int actualPosition = getArguments().getInt(EXTRA_SELECTED_POSITION, 0);
+        if(savedInstanceState != null && savedInstanceState.getParcelableArrayList(BUNDLE_KEY_TRACKLIST) != null) {
+            trackList =  savedInstanceState.getParcelableArrayList(BUNDLE_KEY_TRACKLIST);
+            actualPosition = savedInstanceState.getInt(BUNDLE_KEY_SELECTEDPOSITION, 0);
+            timeElapsed = savedInstanceState.getDouble(BUNDLE_KEY_TIME_ELAPSED);
+            finalTime = savedInstanceState.getDouble(BUNDLE_KEY_FINAL_TIME);
+        } else {
+            trackList =  getArguments().getParcelableArrayList(BUNDLE_KEY_TRACKLIST);
+            actualPosition = getArguments().getInt(BUNDLE_KEY_SELECTEDPOSITION, 0);
+        }
 
-        if (trackArray != null) {
-            List<Track> trackList = Arrays.asList(trackArray);
+        if (trackList != null) {
             playerPresenter.init(trackList, actualPosition);
         }
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if(trackList != null) {
+            outState.putParcelableArrayList(BUNDLE_KEY_TRACKLIST, new ArrayList<Track>(trackList));
+            outState.putInt(BUNDLE_KEY_SELECTEDPOSITION, actualPosition);
+            outState.putDouble(BUNDLE_KEY_TIME_ELAPSED, timeElapsed);
+            outState.putDouble(BUNDLE_KEY_FINAL_TIME, finalTime);
+        }
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -194,8 +226,8 @@ public class PlayerFragment extends DialogFragment implements MediaPlayer.OnPrep
     public static PlayerFragment newInstance(int position, List<Track> trackList) {
         PlayerFragment playerFragment = new PlayerFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(EXTRA_SELECTED_POSITION, position);
-        bundle.putParcelableArray(EXTRA_TRACKS, trackList.toArray(new Track[trackList.size()]));
+        bundle.putInt(BUNDLE_KEY_SELECTEDPOSITION, position);
+        bundle.putParcelableArrayList(BUNDLE_KEY_TRACKLIST, new ArrayList<Track>(trackList));
         playerFragment.setArguments(bundle);
 
         return playerFragment;
@@ -204,6 +236,7 @@ public class PlayerFragment extends DialogFragment implements MediaPlayer.OnPrep
     @Override
     public void play(Track track, Boolean hasNext, Boolean hasPrevious) {
         this.track = track;
+        actualPosition = trackList.indexOf(track);
         playerListener.onPlay(track);
         imageButtonPreviousTrack.setEnabled(hasPrevious);
         imageButtonPlayTrack.setEnabled(false);
@@ -281,7 +314,10 @@ public class PlayerFragment extends DialogFragment implements MediaPlayer.OnPrep
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        finalTime = mediaPlayer.getDuration();
+        if(finalTime == 0) {
+            finalTime = mediaPlayer.getDuration();
+        }
+        mediaPlayer.seekTo((int)timeElapsed);
         seekBar.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         seekBar.setMax((int) finalTime);
@@ -346,6 +382,8 @@ public class PlayerFragment extends DialogFragment implements MediaPlayer.OnPrep
 
     @Override
     public void onCompletion(MediaPlayer mp) {
+        finalTime = 0;
+        timeElapsed = 0;
         playerPresenter.loadNext();
     }
 
